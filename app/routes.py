@@ -98,3 +98,9 @@ def results():
                          score=score,
                          total=len(quiz_data),
                          answers=answers)
+
+
+@main.route('/learn/beverages')
+def learn_beverages():
+    # render Mike's Portion of the learn feature
+    return render_template('learn_beverages.html')
