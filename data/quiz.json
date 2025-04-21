@@ -1,1 +1,32 @@
-
+[
+    {
+        "question": "What is the main purpose of this learning platform?",
+        "options": [
+            "To entertain",
+            "To educate",
+            "To sell products",
+            "To play games"
+        ],
+        "correct_answer": "To educate"
+    },
+    {
+        "question": "Which of these is a basic concept covered in lesson 2?",
+        "options": [
+            "Advanced mathematics",
+            "Fundamental concepts",
+            "Complex algorithms",
+            "Machine learning"
+        ],
+        "correct_answer": "Fundamental concepts"
+    },
+    {
+        "question": "What type of content is covered in lesson 3?",
+        "options": [
+            "Basic content",
+            "Intermediate content",
+            "Advanced material",
+            "Beginner tutorials"
+        ],
+        "correct_answer": "Advanced material"
+    }
+]

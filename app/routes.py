@@ -1,16 +1,33 @@
-from flask import Blueprint, render_template, request, jsonify, session
+from flask import Blueprint, render_template, request, jsonify, session, current_app
 from app.models import UserProgress
 from app import db
 import json
+import os
 
 main = Blueprint('main', __name__)
 
 def load_data():
-    with open('data/lessons.json') as f:
-        lessons = json.load(f)
-    with open('data/quiz.json') as f:
-        quiz = json.load(f)
-    return lessons, quiz
+    try:
+        # Get the absolute path to the data directory
+        data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+        
+        # Load lessons
+        lessons_path = os.path.join(data_dir, 'lessons.json')
+        with open(lessons_path, 'r') as f:
+            lessons = json.load(f)
+        
+        # Load quiz
+        quiz_path = os.path.join(data_dir, 'quiz.json')
+        with open(quiz_path, 'r') as f:
+            quiz = json.load(f)
+            
+        return lessons, quiz
+    except FileNotFoundError as e:
+        print(f"Error: Could not find data files: {str(e)}")
+        return [], []
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON format in data files: {str(e)}")
+        return [], []
 
 @main.route('/')
 def home():
@@ -19,6 +36,9 @@ def home():
 @main.route('/learn/<int:lesson_id>')
 def learn(lesson_id):
     lessons, _ = load_data()
+    if not lessons:
+        return "Error: Could not load lesson data", 500
+        
     if lesson_id < 1 or lesson_id > len(lessons):
         return "Lesson not found", 404
     
