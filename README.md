@@ -1,6 +1,11 @@
 # uidesign-latte
 
-Run the code with python run.py, which will also install necessary requirements listed in requirements.txt 
+# Setup
+pip install -r requirements.txt
+python run.py
+
+
+Run the code with python run.py. 
 
 # Routes
 / – Homepage of the app.
