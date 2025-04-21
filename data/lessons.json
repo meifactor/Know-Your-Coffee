@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Introduction",
+        "content": "<p>This is the first lesson. Welcome to our learning platform!</p>"
+    },
+    {
+        "title": "Basic Concepts",
+        "content": "<p>In this lesson, we'll cover the fundamental concepts.</p>"
+    },
+    {
+        "title": "Advanced Topics",
+        "content": "<p>Now we'll dive into more advanced material.</p>"
+    }
+]

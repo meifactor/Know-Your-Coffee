@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="results-container">
+    <h2>Quiz Results</h2>
+    <div class="score-summary mb-4">
+        <h3>Your Score: {{ score }} / {{ total }}</h3>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" 
+                 style="width: {{ (score/total) * 100 }}%"
+                 aria-valuenow="{{ score }}" 
+                 aria-valuemin="0" 
+                 aria-valuemax="{{ total }}">
+            </div>
+        </div>
+    </div>
+
+    <div class="answer-review">
+        {% for answer in answers %}
+        <div class="card mb-3 {% if answer.is_correct %}border-success{% else %}border-danger{% endif %}">
+            <div class="card-body">
+                <h5 class="card-title">Question {{ loop.index }}</h5>
+                <p class="card-text">{{ answer.question }}</p>
+                <p>Your answer: {{ answer.user_answer }}</p>
+                <p>Correct answer: {{ answer.correct_answer }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ url_for('main.home') }}" class="btn btn-primary">Return to Home</a>
+</div>
+{% endblock %}
