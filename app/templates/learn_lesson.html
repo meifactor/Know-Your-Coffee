@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+{% include 'banner.html' %}
+<div style="margin: 2em auto; max-width: 900px; text-align: center;">
+    
+    <h1 style="margin-top: 2em;">Rank from Strongest to Weakest</h1>
+    <div style="color: #666; margin-bottom: 1em;">
+        Drag each component in the correct order, from strongest (1) to weakest (3)
+    </div>
+    <form id="rank-form">
+    <div id="draggable-area">
+        <div style="display: flex; justify-content: center; gap: 2em; margin-bottom: 2em;">
+            {% for item in items %}
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <div draggable="true" class="draggable-item" style="background: #e8d1b0; border-radius: 8px; padding: 1em 2em; font-size: 1.3em; font-weight: bold; margin-bottom: 1em; cursor: grab;">
+                    {{ item }}
+                </div>
+                <div class="drop-zone" style="border: 2px dashed #aaa; border-radius: 12px; padding: 2em 2em; min-width: 160px; min-height: 60px; font-size: 1.2em; color: #888;">
+                    {{ loop.index }}{% if loop.index == 1 %}: Strongest{% elif loop.index == 3 %}: Weakest{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="feedback-message" style="color: #b30000; font-size: 1.2em; font-weight: bold; margin-bottom: 1em; display: none; text-align: left;">Not quite, you’re still learning!</div>
+    <div style="display: flex; justify-content: flex-end; gap: 1em;">
+        <button type="reset" style="padding: 0.5em 2em; font-size: 1.1em; border: 1px solid #888; background: #fff; border-radius: 4px;">Reset</button>
+        <button type="submit" style="padding: 0.5em 2em; font-size: 1.1em; background: #6b3e0b; color: #fff; border: none; border-radius: 4px;">Submit</button>
+    </div>
+</form>
+
+</div>
+<script>
+// --- Drag and Drop Logic ---
+function enableDragDrop() {
+    const draggables = document.querySelectorAll('.draggable-item');
+    const dropzones = document.querySelectorAll('.drop-zone');
+    let dragged = null;
+    draggables.forEach(item => {
+        item.addEventListener('dragstart', () => { dragged = item; });
+        item.addEventListener('dragend', () => { dragged = null; });
+    });
+    dropzones.forEach(zone => {
+        zone.addEventListener('dragover', e => { e.preventDefault(); });
+        zone.addEventListener('drop', e => {
+            e.preventDefault();
+            if (dragged) {
+                // Remove any draggable already in this zone
+                const existing = zone.querySelector('.draggable-item');
+                if (existing && existing !== dragged) zone.removeChild(existing);
+                zone.innerHTML = '';
+                zone.appendChild(dragged);
+            }
+        });
+    });
+}
+
+enableDragDrop();
+
+// Save the initial HTML of the entire draggable area
+const draggableArea = document.getElementById('draggable-area');
+const initialDraggableAreaHTML = draggableArea.innerHTML;
+
+// --- Feedback Logic ---
+const correctOrder = {{ items|tojson }};
+let correctRanking = correctOrder;
+// For lesson 1, override with the intended correct order:
+{% if lesson_id == 1 %}
+    // correct order for lesson 1 (example: strongest to weakest)
+    // Change this order as needed!
+    correctRanking = ["Ristretto", "Espresso", "Brewed Coffee"];
+{% endif %}
+
+function checkRanking() {
+    const dropzones = document.querySelectorAll('.drop-zone');
+    let allCorrect = true;
+    dropzones.forEach((zone, i) => {
+        // Remove previous highlights
+        zone.style.border = "2px dashed #aaa";
+        zone.style.background = "";
+        zone.style.boxShadow = "none";
+        zone.style.color = "#888";
+        // Check if correct
+        const item = zone.querySelector('.draggable-item');
+        if (item && item.textContent.trim() === correctRanking[i]) {
+            zone.style.border = "2px dashed #218838";
+            zone.style.background = "#f6fff6";
+            zone.style.boxShadow = "0 0 0 2px #218838";
+            zone.style.color = "#218838";
+        } else {
+            allCorrect = false;
+            if (item) {
+                zone.style.border = "2px solid #b30000";
+                zone.style.background = "#fff6f6";
+                zone.style.boxShadow = "0 0 0 2px #b30000";
+                zone.style.color = "#b30000";
+            }
+        }
+    });
+    return allCorrect;
+}
+
+document.getElementById('rank-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const allCorrect = checkRanking();
+    const feedback = document.getElementById('feedback-message');
+    if (!allCorrect) {
+        feedback.style.display = 'block';
+    } else {
+        feedback.style.display = 'none';
+        // Optionally show a success message or go to next lesson
+    }
+});
+
+document.getElementById('rank-form').addEventListener('reset', function(e) {
+    setTimeout(() => {
+        draggableArea.innerHTML = initialDraggableAreaHTML;
+        enableDragDrop();
+        document.getElementById('feedback-message').style.display = 'none';
+    }, 0); // Wait for form reset
+});
+</script>
+{% endblock %}

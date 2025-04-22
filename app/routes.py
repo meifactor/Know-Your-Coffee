@@ -41,6 +41,17 @@ def quiz_start():
 def learn_overview():
     return render_template('learn.html', lessons=lessons)  # lessons is your list of all lessons
 
+@main.route('/learn/<int:lesson_id>')
+def learn_lesson(lesson_id):
+    # You can customize the items for each lesson_id
+    if lesson_id == 1:
+        items = ["Brewed Coffee", "Espresso", "Ristretto"]
+    elif lesson_id == 2:
+        items = ["Milk", "Foam", "Espresso"]  # Example for lesson 2
+    else:
+        items = []
+    return render_template('learn_lesson.html', items=items, lesson_id=lesson_id)
+
 
 def get_lesson_by_id(lesson_id):
     # lesson_id is 1-based, list is 0-based
