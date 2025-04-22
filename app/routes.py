@@ -7,19 +7,23 @@ main = Blueprint('main', __name__)
 lessons = [
     {
         "title": "Espresso",
-        "content": "<p>Concentrated coffee made by forcing hot water through finely-ground coffee, bolder than brewed coffee.</p>"
+        "content": "<p>Concentrated coffee made by forcing hot water through finely-ground coffee, bolder than brewed coffee.</p>",
+        "gif": "https://i.gifer.com/origin/ac/ac83910ffc9eaf2a934df34d0a393fa8.gif",
     },
     {
         "title": "Ristretto",
-        "content": "<p>A short shot of espresso, using less water and producing a more concentrated flavor.</p>"
+        "content": "<p>A short shot of espresso, using less water and producing a more concentrated flavor.</p>",
+        "gif": "https://about.starbucks.com/uploads/2025/01/Ristretto-Shot.gif",
     },
     {
         "title": "Foamed Milk",
-        "content": "<p>Milk that has been aerated to create a light, frothy texture for drinks like cappuccinos.</p>"
+        "content": "<p>Milk that has been aerated to create a light, frothy texture for drinks like cappuccinos.</p>",
+        "gif": "https://s.yimg.com/ny/api/res/1.2/bk_4fuw.gDrEG4DNfHnewA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU0MQ--/https://media.zenfs.com/en-US/homerun/spoon_university_184/6bd732b73f4213523975b46abbe015bc",
     },
     {
         "title": "Steamed Milk",
-        "content": "<p>Milk heated with steam to create a creamy texture, used in lattes and other drinks.</p>"
+        "content": "<p>Milk heated with steam to create a creamy texture, used in lattes and other drinks.</p>",
+        "gif": "https://media.giphy.com/media/t3tTsNV1y2XRYPDyOX/giphy.gif",
     }
 ]
 
