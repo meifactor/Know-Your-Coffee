@@ -1,8 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, flash
-from app.models import UserProgress
-from app import db
 import json
-from datetime import datetime
 
 main = Blueprint('main', __name__)
 
@@ -23,11 +20,6 @@ def learn(lesson_id):
     if lesson_id < 1 or lesson_id > len(lessons):
         flash("Lesson not found", "error")
         return redirect(url_for('main.home'))
-    
-    # Record user progress
-    progress = UserProgress(page_type='learn', page_number=lesson_id)
-    db.session.add(progress)
-    db.session.commit()
     
     return render_template('learn.html', 
                          lesson=lessons[lesson_id-1],
@@ -219,18 +211,6 @@ def get_progress():
     
     return progress
 
-def get_learning_tip(drink_name):
-    tips = {
-        'Latte': "A latte has more steamed milk than a cappuccino, making it creamier. Look for the larger volume and thinner layer of foam.",
-        'Cortado': "A cortado has equal parts espresso and milk (1:1). It's smaller than a latte but larger than a macchiato.",
-        'Macchiato': "A macchiato has just a 'mark' of foam. It's mostly espresso with a small amount of milk foam on top.",
-        'Cappuccino': "Remember the rule of thirds: ⅓ espresso, ⅓ steamed milk, ⅓ foam. Look for the thick, distinctive foam layer.",
-        'Flat White': "A flat white has microfoamed milk with minimal foam. Look for the velvety texture and stronger coffee taste.",
-        'Mocha': "Think of a mocha as a chocolate latte. It always includes chocolate syrup mixed with the espresso and steamed milk.",
-        'Espresso': "Espresso is the foundation of all these drinks. Look for the small size and distinctive crema on top."
-    }
-    return tips.get(drink_name, "Focus on the unique characteristics of each coffee drink to tell them apart.")
-
 @main.route('/results')
 def results():
     _, quiz_data = load_data()
@@ -266,5 +246,4 @@ def results():
 
 @main.route('/learn/beverages')
 def learn_beverages():
-    # render Mike's Portion of the learn feature
     return render_template('learn_beverages.html')

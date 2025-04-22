@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="lesson-detail-container">
+        <h1>{{ lesson.title }}</h1>
+        <div>{{ lesson.content|safe }}</div>
+        <a href="{{ url_for('main.learn_overview') }}" class="btn btn-primary mt-3">Back to all lessons</a>
+    </div>
+{% endblock %}
