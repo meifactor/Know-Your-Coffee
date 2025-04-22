@@ -2,32 +2,259 @@
 
 {% block content %}
 <div class="results-container">
-    <h2>Quiz Results</h2>
-    <div class="score-summary mb-4">
-        <h3>Your Score: {{ score }} / {{ total }}</h3>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" 
-                 style="width: {{ (score/total) * 100 }}%"
-                 aria-valuenow="{{ score }}" 
-                 aria-valuemin="0" 
-                 aria-valuemax="{{ total }}">
+    <h1 class="results-title">Quiz Results</h1>
+    
+    <div class="score-summary">
+        <div class="score-box">
+            <span class="score">{{ score }}/{{ total }}</span>
+            <span class="score-label">Correct Answers</span>
+        </div>
+        <div class="score-details">
+            <div class="detail-item correct">
+                <span class="count">{{ score }}</span> Correct
+            </div>
+            <div class="detail-item incorrect">
+                <span class="count">{{ total - score }}</span> Incorrect
             </div>
         </div>
     </div>
 
-    <div class="answer-review">
+    <div class="answers-review">
+        <h2>Review Your Answers</h2>
         {% for answer in answers %}
-        <div class="card mb-3 {% if answer.is_correct %}border-success{% else %}border-danger{% endif %}">
-            <div class="card-body">
-                <h5 class="card-title">Question {{ loop.index }}</h5>
-                <p class="card-text">{{ answer.question }}</p>
-                <p>Your answer: {{ answer.user_answer }}</p>
-                <p>Correct answer: {{ answer.correct_answer }}</p>
+        <div class="answer-card {% if answer.is_correct %}correct{% elif answer.skipped %}skipped{% else %}incorrect{% endif %}">
+            <div class="question-section">
+                <h3>Question {{ loop.index }}</h3>
+                <p class="question-text">{{ answer.question }}</p>
+            </div>
+            
+            <div class="answer-section">
+                {% if answer.skipped %}
+                <p class="status skipped">Skipped</p>
+                {% elif answer.is_correct %}
+                <p class="status correct">Correct!</p>
+                {% else %}
+                <p class="status incorrect">Incorrect</p>
+                {% endif %}
+                
+                <p class="answer-detail">
+                    {% if not answer.skipped %}Your answer: {{ answer.user_answer }}{% endif %}
+                </p>
+                <p class="correct-answer">
+                    Correct answer: {{ answer.correct_answer }}
+                </p>
+                <p class="description">{{ answer.description }}</p>
             </div>
         </div>
         {% endfor %}
     </div>
 
-    <a href="{{ url_for('main.home') }}" class="btn btn-primary">Return to Home</a>
+    <div class="results-actions">
+        <a href="{{ url_for('main.restart_quiz') }}" class="btn-restart">Take Quiz Again</a>
+        <a href="{{ url_for('main.home') }}" class="btn-home">Back to Home</a>
+    </div>
 </div>
+
+<style>
+.results-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.results-title {
+    text-align: center;
+    color: var(--primary-brown);
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.score-summary {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.score-box {
+    text-align: center;
+}
+
+.score {
+    font-size: 3em;
+    color: var(--primary-brown);
+    font-weight: bold;
+    display: block;
+}
+
+.score-label {
+    color: #666;
+    font-size: 1.1em;
+}
+
+.score-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.detail-item {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+.detail-item.correct {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+}
+
+.detail-item.incorrect {
+    background-color: #FFEBEE;
+    color: #C62828;
+}
+
+.answers-review {
+    margin-top: 40px;
+}
+
+.answers-review h2 {
+    color: var(--primary-brown);
+    margin-bottom: 20px;
+}
+
+.answer-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-left: 4px solid #ddd;
+}
+
+.answer-card.correct {
+    border-left-color: #2E7D32;
+}
+
+.answer-card.incorrect {
+    border-left-color: #C62828;
+}
+
+.answer-card.skipped {
+    border-left-color: #F57C00;
+}
+
+.question-section {
+    margin-bottom: 15px;
+}
+
+.question-section h3 {
+    color: var(--primary-brown);
+    margin-bottom: 5px;
+}
+
+.question-text {
+    color: #333;
+    font-size: 1.1em;
+}
+
+.answer-section {
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.status {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.status.correct {
+    color: #2E7D32;
+}
+
+.status.incorrect {
+    color: #C62828;
+}
+
+.status.skipped {
+    color: #F57C00;
+}
+
+.answer-detail, .correct-answer {
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.description {
+    font-style: italic;
+    color: #666;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.results-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.btn-restart, .btn-home {
+    display: inline-block;
+    padding: 1rem 2rem;
+    border-radius: 16px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+    border: 2px solid;
+    min-width: 200px;
+    text-align: center;
+}
+
+.btn-restart {
+    background-color: #8B4513;
+    color: white;
+    border-color: #8B4513;
+}
+
+.btn-home {
+    background-color: white;
+    color: #8B4513;
+    border-color: #8B4513;
+}
+
+.btn-restart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #6B3413;
+    border-color: #6B3413;
+}
+
+.btn-home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #FFF5E6;
+}
+
+@media (max-width: 600px) {
+    .score-summary {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .results-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .btn-restart, .btn-home {
+        width: 100%;
+    }
+}
+</style>
 {% endblock %}
