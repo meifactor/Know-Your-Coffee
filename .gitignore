@@ -3,4 +3,4 @@ __pycache__/
 instance/
 *.db
 .env
-.venv/
+.venv/__pycache__/
