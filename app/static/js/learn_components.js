@@ -25,9 +25,15 @@ function checkAllClicked() {
 
 // Optionally, handle continue button click:
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('continueBtn').addEventListener('click', function() {
-        if (clicked.size === lessons.length) {
-            window.location.href = "/learn/beverages"; // or whatever is next
+    // Show the first component (espresso) automatically
+    showComponent(0);
+    // Disable continue button initially
+    document.getElementById('continueBtn').disabled = true;
+    document.getElementById('continueBtn').innerText = "View all components to continue";
+    document.getElementById('continueBtn').addEventListener('click', function(e) {
+        if (clicked.size !== lessons.length) {
+            e.preventDefault();
         }
+        // If all clicked, allow navigation (handled by href)
     });
 });

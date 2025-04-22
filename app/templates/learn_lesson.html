@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {% include 'banner.html' %}
-<div style="margin: 2em auto; max-width: 900px; text-align: center;">
+<div class="lesson-container" style="text-align: center;">
     
     {% if lesson_id == 2 %}
     <h1 style="margin-top: 2em;">Drag the milk types to complete the sentence:</h1>
@@ -24,9 +24,9 @@
             <div id="success-message" style="display: none; color: #228B22; font-size: 1.2em; font-weight: bold; text-align: left; margin-bottom: 0.5em;"><span style="font-size:1.2em;">&#10003;</span> Awesome!</div>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 1em;">
-            <button type="button" class="rank-reset-btn">Reset</button>
-            <button type="submit" class="rank-submit-btn" id="submit-continue-btn">Submit</button>
+        <div class="navigation-buttons">
+            <button type="button" class="btn btn-secondary rank-reset-btn">Reset</button>
+            <button type="submit" class="btn btn-primary rank-submit-btn" id="submit-continue-btn">Submit</button>
         </div>
     </form>
     <style>
@@ -137,50 +137,36 @@
             });
         });
         // Reset button logic
-        document.querySelector('.rank-reset-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            // Move milk chips back to the top row in original order
-            if (milkRow) {
-                milkRow.appendChild(document.getElementById('milk-steamed'));
-                document.getElementById('milk-steamed').setAttribute('draggable', 'true');
-                milkRow.appendChild(document.getElementById('milk-foamed'));
-                document.getElementById('milk-foamed').setAttribute('draggable', 'true');
-            }
-            // Allow dragging chips back to the top row
-            if (milkRow) {
-                milkRow.addEventListener('dragover', e => { e.preventDefault(); });
-                milkRow.addEventListener('dragenter', e => {
-                    e.preventDefault();
-                    milkRow.classList.add('active');
-                });
-                milkRow.addEventListener('dragleave', e => {
-                    milkRow.classList.remove('active');
-                });
-                milkRow.addEventListener('drop', e => {
-                    e.preventDefault();
-                    milkRow.classList.remove('active');
-                    const draggedId = e.dataTransfer.getData('text/plain');
-                    if (draggedId) {
-                        const draggedElem = document.getElementById(draggedId);
-                        if (draggedElem) {
-                            milkRow.appendChild(draggedElem);
-                            draggedElem.setAttribute('draggable', 'true');
-                        }
+        if (milkRow && document.querySelector('.rank-reset-btn') && blanks[0] && blanks[1]) {
+            document.querySelector('.rank-reset-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                // Move milk chips back to the top row in correct order
+                const milkSteamed = document.getElementById('milk-steamed');
+                const milkFoamed = document.getElementById('milk-foamed');
+                if (milkRow && milkSteamed && milkFoamed) {
+                    milkRow.appendChild(milkSteamed);
+                    milkRow.appendChild(milkFoamed);
+                    milkSteamed.setAttribute('draggable', 'true');
+                    milkFoamed.setAttribute('draggable', 'true');
+                }
+                // Remove any milk chips from blanks
+                blanks.forEach(blank => {
+                    while (blank && blank.firstChild) {
+                        milkRow.appendChild(blank.firstChild);
                     }
                 });
-            }
-            // Clear blanks highlights
-            blanks.forEach(blank => {
-                blank.classList.remove('correct', 'incorrect');
+                // Clear highlights
+                blanks.forEach(blank => {
+                    blank.classList.remove('correct', 'incorrect');
+                });
+                document.getElementById('feedback-message').style.display = 'none';
+                document.getElementById('success-message').style.display = 'none';
+                const submitBtn = document.querySelector('.rank-submit-btn');
+                submitBtn.textContent = 'Submit';
+                submitBtn.type = 'submit';
+                submitBtn.onclick = null;
             });
-            document.getElementById('feedback-message').style.display = 'none';
-            document.getElementById('success-message').style.display = 'none';
-            const submitBtn = document.querySelector('.rank-submit-btn');
-            submitBtn.textContent = 'Submit';
-            submitBtn.type = 'submit';
-            submitBtn.onclick = null;
-            document.querySelector('.rank-reset-btn').style.display = '';
-        });
+        }
         // Submission and feedback logic
         document.getElementById('milk-blank-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -359,6 +345,32 @@ enableDragDrop();
 // Save the initial HTML of the entire draggable area
 const draggableArea = document.getElementById('draggable-area');
 const initialDraggableAreaHTML = draggableArea ? draggableArea.innerHTML : '';
+
+// --- Reset Button Logic for Ranking Activity ---
+const rankResetBtn = document.querySelector('.rank-reset-btn');
+if (draggableArea && rankResetBtn) {
+    rankResetBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Restore the draggable area to its initial state
+        draggableArea.innerHTML = initialDraggableAreaHTML;
+        // Re-enable drag and drop
+        enableDragDrop();
+        // Hide feedback and success messages
+        const feedback = document.getElementById('feedback-message');
+        const success = document.getElementById('success-message');
+        if (feedback) feedback.style.display = 'none';
+        if (success) success.style.display = 'none';
+        // Reset submit/continue button
+        const submitBtn = document.querySelector('.rank-submit-btn');
+        if (submitBtn) {
+            submitBtn.textContent = 'Submit';
+            submitBtn.type = 'submit';
+            submitBtn.onclick = null;
+            submitBtn.style.display = '';
+        }
+        rankResetBtn.style.display = '';
+    });
+}
 
 // --- Feedback Logic ---
 const correctOrder = {{ items|tojson }};
