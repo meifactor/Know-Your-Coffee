@@ -4,6 +4,24 @@ import os
 
 main = Blueprint('main', __name__)
 
+lessons = [
+    {
+        "title": "Espresso",
+        "content": "<p>Concentrated coffee made by forcing hot water through finely-ground coffee, bolder than brewed coffee.</p>"
+    },
+    {
+        "title": "Ristretto",
+        "content": "<p>A short shot of espresso, using less water and producing a more concentrated flavor.</p>"
+    },
+    {
+        "title": "Foamed Milk",
+        "content": "<p>Milk that has been aerated to create a light, frothy texture for drinks like cappuccinos.</p>"
+    },
+    {
+        "title": "Steamed Milk",
+        "content": "<p>Milk heated with steam to create a creamy texture, used in lattes and other drinks.</p>"
+    }
+]
 
 @main.route('/')
 def home():
@@ -16,10 +34,20 @@ def quiz_start():
     return redirect(url_for('main.quiz', question_id=1))
 
 @main.route('/learn')
-def learn_start():
-    """Redirect /learn → /learn/1"""
-    return redirect(url_for('main.learn', lesson_id=1))
+def learn_overview():
+    return render_template('learn.html', lessons=lessons)  # lessons is your list of all lessons
 
+
+def get_lesson_by_id(lesson_id):
+    # lesson_id is 1-based, list is 0-based
+    if 1 <= lesson_id <= len(lessons):
+        return lessons[lesson_id - 1]
+    else:
+        # Optionally, handle invalid lesson_id
+        return {"title": "Lesson Not Found", "content": "<p>This lesson does not exist.</p>"}
+
+def get_total_lessons():
+    return len(lessons)
 
 @main.route('/learn/beverages')
 def learn_beverages():
