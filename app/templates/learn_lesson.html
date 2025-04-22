@@ -3,6 +3,261 @@
 {% include 'banner.html' %}
 <div style="margin: 2em auto; max-width: 900px; text-align: center;">
     
+    {% if lesson_id == 2 %}
+    <h1 style="margin-top: 2em;">Drag the milk types to complete the sentence:</h1>
+    <div style="margin-bottom: 1.5em; display: flex; justify-content: center; gap: 2em;">
+        <div draggable="true" class="draggable-milk" id="milk-steamed">Steamed Milk</div>
+        <div draggable="true" class="draggable-milk" id="milk-foamed">Foamed Milk</div>
+    </div>
+    <form id="milk-blank-form" autocomplete="off">
+
+        <div style="font-size: 1.3em; margin-bottom: 2em; text-align: left; display: flex; flex-direction: column; align-items: center;">
+            <span>
+                <span class="drop-blank" id="blank1"></span>
+                is used to create a fluffy top layer, while
+                <span class="drop-blank" id="blank2"></span>
+                is used for a smooth, creamy base.
+            </span>
+        </div>
+        <div id="feedback-row" style="min-height: 2.5em; margin-bottom: 0.5em;">
+            <div id="feedback-message" style="color: #b30000; font-size: 1.2em; font-weight: bold; display: none; text-align: left; margin-bottom: 0.5em;">Not quite, you’re still learning!</div>
+            <div id="success-message" style="display: none; color: #228B22; font-size: 1.2em; font-weight: bold; text-align: left; margin-bottom: 0.5em;"><span style="font-size:1.2em;">&#10003;</span> Awesome!</div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 1em;">
+            <button type="button" class="rank-reset-btn">Reset</button>
+            <button type="submit" class="rank-submit-btn" id="submit-continue-btn">Submit</button>
+        </div>
+    </form>
+    <style>
+    .draggable-milk {
+        user-select: none;
+        transition: box-shadow 0.2s;
+        font-size: 1.2em;
+        padding: 0.6em 1.5em;
+        background: #e8d1b0;
+        border-radius: 8px;
+        font-weight: bold;
+        box-sizing: border-box;
+        display: inline-block;
+        line-height: 1.2;
+        margin: 0;
+    }
+    .draggable-milk.dragging {
+        opacity: 0.7;
+        box-shadow: 0 4px 14px rgba(139,97,71,0.18);
+        border: 2px solid #a86e2a;
+    }
+    .drop-blank {
+        min-width: 140px;
+        min-height: 36px;
+        border: 2px dashed #aaa;
+        border-radius: 8px;
+        padding: 0;
+        font-size: inherit;
+        background: #fff;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+    }
+    
+    .drop-blank.active, .drop-blank.possible-drop-target {
+        border-color: #a86e2a;
+        border-width: 3px;
+        background: #ffd580;
+        box-shadow: 0 0 14px 4px #ffecb3, 0 0 0 4px #a86e2a;
+        transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .drop-blank {
+        min-width: 140px;
+        min-height: 36px;
+        border: 2px dashed #aaa;
+        border-radius: 8px;
+        background: #fff;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        margin: 0 0.2em 0.7em 0.2em;
+        transition: none;
+    }
+    /* Remove correct/incorrect highlight for lesson 2 drop zones */
+.drop-blank.correct,
+.drop-blank.incorrect {
+    border: 2px dashed #aaa;
+    background: #fff;
+    color: inherit;
+}
+    </style>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Make lesson_id available to JS
+        var lesson_id = {{ lesson_id|tojson }};
+        // Drag and drop logic for milk types
+        const draggables = document.querySelectorAll('.draggable-milk');
+        const blanks = [document.getElementById('blank1'), document.getElementById('blank2')];
+        const milkRow = document.querySelector('div[style*="justify-content: center"]');
+        draggables.forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                if (!e.dataTransfer) return;
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', item.id);
+                setTimeout(() => item.classList.add('dragging'), 0);
+                blanks.forEach(blank => blank.classList.add('possible-drop-target'));
+            });
+            item.addEventListener('dragend', (e) => {
+                item.classList.remove('dragging');
+                blanks.forEach(blank => blank.classList.remove('possible-drop-target'));
+            });
+        });
+        // Drop zone event listeners for blanks
+        blanks.forEach(blank => {
+            if (!blank) return;
+            blank.addEventListener('dragover', e => { e.preventDefault(); });
+            blank.addEventListener('dragenter', e => {
+                e.preventDefault();
+                blank.classList.add('active');
+            });
+            blank.addEventListener('dragleave', e => {
+                blank.classList.remove('active');
+            });
+            blank.addEventListener('drop', e => {
+                e.preventDefault();
+                blank.classList.remove('active');
+                // Only allow one milk type per blank
+                if (blank.children.length === 0) {
+                    const draggedId = e.dataTransfer.getData('text/plain');
+                    if (draggedId) {
+                        const draggedElem = document.getElementById(draggedId);
+                        if (draggedElem) {
+                            blank.appendChild(draggedElem);
+                            draggedElem.setAttribute('draggable', 'true');
+                        }
+                    }
+                }
+            });
+        });
+        // Reset button logic
+        document.querySelector('.rank-reset-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Move milk chips back to the top row in original order
+            if (milkRow) {
+                milkRow.appendChild(document.getElementById('milk-steamed'));
+                document.getElementById('milk-steamed').setAttribute('draggable', 'true');
+                milkRow.appendChild(document.getElementById('milk-foamed'));
+                document.getElementById('milk-foamed').setAttribute('draggable', 'true');
+            }
+            // Allow dragging chips back to the top row
+            if (milkRow) {
+                milkRow.addEventListener('dragover', e => { e.preventDefault(); });
+                milkRow.addEventListener('dragenter', e => {
+                    e.preventDefault();
+                    milkRow.classList.add('active');
+                });
+                milkRow.addEventListener('dragleave', e => {
+                    milkRow.classList.remove('active');
+                });
+                milkRow.addEventListener('drop', e => {
+                    e.preventDefault();
+                    milkRow.classList.remove('active');
+                    const draggedId = e.dataTransfer.getData('text/plain');
+                    if (draggedId) {
+                        const draggedElem = document.getElementById(draggedId);
+                        if (draggedElem) {
+                            milkRow.appendChild(draggedElem);
+                            draggedElem.setAttribute('draggable', 'true');
+                        }
+                    }
+                });
+            }
+            // Clear blanks highlights
+            blanks.forEach(blank => {
+                blank.classList.remove('correct', 'incorrect');
+            });
+            document.getElementById('feedback-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+            const submitBtn = document.querySelector('.rank-submit-btn');
+            submitBtn.textContent = 'Submit';
+            submitBtn.type = 'submit';
+            submitBtn.onclick = null;
+            document.querySelector('.rank-reset-btn').style.display = '';
+        });
+        // Submission and feedback logic
+        document.getElementById('milk-blank-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const feedback = document.getElementById('feedback-message');
+            const success = document.getElementById('success-message');
+            const resetBtn = document.querySelector('.rank-reset-btn');
+            const submitBtn = document.querySelector('.rank-submit-btn');
+            if (lesson_id === 2) {
+                const blank1 = document.getElementById('blank1');
+                const blank2 = document.getElementById('blank2');
+                let correct =
+                    blank1.children.length && blank2.children.length &&
+                    blank1.children[0].textContent.trim() === 'Foamed Milk' &&
+                    blank2.children[0].textContent.trim() === 'Steamed Milk';
+                if (correct) {
+                    feedback.style.display = 'none';
+                    success.style.display = '';
+                    submitBtn.textContent = 'Continue';
+                    submitBtn.type = 'button';
+                    submitBtn.onclick = function() {
+                        window.location.href = '/learn/3';
+                    };
+                    resetBtn.style.display = 'none';
+                } else {
+                    feedback.style.display = 'block';
+                    success.style.display = 'none';
+                    resetBtn.style.display = '';
+                    submitBtn.textContent = 'Submit';
+                    submitBtn.type = 'submit';
+                    submitBtn.onclick = null;
+                }
+                resetBtn.style.display = '';
+            };
+        })
+        // Submission and feedback logic
+        const form = document.getElementById('milk-blank-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const feedback = document.getElementById('feedback-message');
+                const success = document.getElementById('success-message');
+                const resetBtn = document.querySelector('.rank-reset-btn');
+                const submitBtn = document.querySelector('.rank-submit-btn');
+                if (lesson_id === 2) {
+                    const blank1 = document.getElementById('blank1');
+                    const blank2 = document.getElementById('blank2');
+                    let correct =
+                        blank1.children.length && blank2.children.length &&
+                        blank1.children[0].textContent.trim() === 'Foamed Milk' &&
+                        blank2.children[0].textContent.trim() === 'Steamed Milk';
+                    if (correct) {
+                        if (feedback) feedback.style.display = 'none';
+                        if (success) success.style.display = '';
+                        if (submitBtn) {
+                            submitBtn.textContent = 'Continue';
+                            submitBtn.type = 'button';
+                            submitBtn.onclick = function() {
+                                window.location.href = '/learn/3';
+                            };
+                        }
+                        if (resetBtn) resetBtn.style.display = 'none';
+                    } else {
+                        if (feedback) feedback.style.display = 'block';
+                        if (success) success.style.display = 'none';
+                        if (resetBtn) resetBtn.style.display = '';
+                        if (submitBtn) {
+                            submitBtn.textContent = 'Submit';
+                            submitBtn.type = 'submit';
+                            submitBtn.onclick = null;
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+    {% else %}
     <h1 style="margin-top: 2em;">Rank from Strongest to Weakest</h1>
     <div style="color: #666; margin-bottom: 1em;">
         Drag each component in the correct order, from strongest (1) to weakest (3)
@@ -23,33 +278,77 @@
         </div>
     </div>
     <div id="feedback-message" style="color: #b30000; font-size: 1.2em; font-weight: bold; margin-bottom: 1em; display: none; text-align: left;">Not quite, you’re still learning!</div>
+    <div id="success-message" style="display: none; color: #228B22; font-size: 1.2em; font-weight: bold; margin-bottom: 1em; text-align: left;"><span style="font-size:1.2em;">&#10003;</span> Awesome!</div>
     <div style="display: flex; justify-content: flex-end; gap: 1em;">
-        <button type="reset" style="padding: 0.5em 2em; font-size: 1.1em; border: 1px solid #888; background: #fff; border-radius: 4px;">Reset</button>
-        <button type="submit" style="padding: 0.5em 2em; font-size: 1.1em; background: #6b3e0b; color: #fff; border: none; border-radius: 4px;">Submit</button>
+        <button type="button" class="rank-reset-btn">Reset</button>
+        <button type="submit" class="rank-submit-btn" id="submit-continue-btn">Submit</button>
     </div>
 </form>
+    {% endif %}
 
 </div>
+<style>
+.drop-zone {
+    border: 2px dashed #aaa;
+    border-radius: 12px;
+    padding: 2em 2em;
+    min-width: 160px;
+    min-height: 60px;
+    font-size: 1.2em;
+    color: #888;
+    background: #faf7f2;
+    transition: border-color 0.2s, background 0.2s;
+}
+.drop-zone.active {
+    border-color: #a86e2a;
+    background: #f6e3c6;
+}
+.draggable-item.dragging {
+    opacity: 0.7;
+    box-shadow: 0 4px 14px rgba(139,97,71,0.18);
+    border: 2px solid #a86e2a;
+}
+</style>
 <script>
 // --- Drag and Drop Logic ---
 function enableDragDrop() {
     const draggables = document.querySelectorAll('.draggable-item');
     const dropzones = document.querySelectorAll('.drop-zone');
     let dragged = null;
+    let lastParent = null;
     draggables.forEach(item => {
-        item.addEventListener('dragstart', () => { dragged = item; });
-        item.addEventListener('dragend', () => { dragged = null; });
+        item.addEventListener('dragstart', (e) => {
+            dragged = item;
+            lastParent = item.parentElement;
+            setTimeout(() => item.classList.add('dragging'), 0);
+        });
+        item.addEventListener('dragend', (e) => {
+            dragged = null;
+            item.classList.remove('dragging');
+        });
     });
     dropzones.forEach(zone => {
         zone.addEventListener('dragover', e => { e.preventDefault(); });
+        zone.addEventListener('dragenter', e => {
+            e.preventDefault();
+            if (!zone.querySelector('.draggable-item')) {
+                zone.classList.add('active');
+            }
+        });
+        zone.addEventListener('dragleave', e => {
+            zone.classList.remove('active');
+        });
         zone.addEventListener('drop', e => {
             e.preventDefault();
-            if (dragged) {
-                // Remove any draggable already in this zone
-                const existing = zone.querySelector('.draggable-item');
-                if (existing && existing !== dragged) zone.removeChild(existing);
-                zone.innerHTML = '';
+            zone.classList.remove('active');
+            // Only allow drop if zone is empty
+            if (!zone.querySelector('.draggable-item')) {
                 zone.appendChild(dragged);
+            } else {
+                // Snap back to last parent if invalid
+                if (lastParent && !lastParent.querySelector('.draggable-item')) {
+                    lastParent.appendChild(dragged);
+                }
             }
         });
     });
@@ -59,7 +358,7 @@ enableDragDrop();
 
 // Save the initial HTML of the entire draggable area
 const draggableArea = document.getElementById('draggable-area');
-const initialDraggableAreaHTML = draggableArea.innerHTML;
+const initialDraggableAreaHTML = draggableArea ? draggableArea.innerHTML : '';
 
 // --- Feedback Logic ---
 const correctOrder = {{ items|tojson }};
@@ -100,16 +399,69 @@ function checkRanking() {
     return allCorrect;
 }
 
-document.getElementById('rank-form').addEventListener('submit', function(e) {
+const rankForm = document.getElementById('rank-form');
+if (rankForm) {
+    rankForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const allCorrect = checkRanking();
     const feedback = document.getElementById('feedback-message');
-    if (!allCorrect) {
+    const success = document.getElementById('success-message');
+    const continueBtn = document.getElementById('continueBtn');
+    const resetBtn = document.querySelector('.rank-reset-btn');
+    const submitBtn = document.querySelector('.rank-submit-btn');
+    const dropzones = document.querySelectorAll('.drop-zone');
+        if (!allCorrect) {
         feedback.style.display = 'block';
+        success.style.display = 'none';
+        dropzones.forEach(zone => {
+            zone.style.border = '2px dashed #aaa'; // Always neutral gray border
+        });
+        resetBtn.style.display = '';
+        submitBtn.style.display = '';
+        submitBtn.textContent = 'Submit';
+        submitBtn.type = 'submit';
+        submitBtn.onclick = null;
     } else {
         feedback.style.display = 'none';
-        // Optionally show a success message or go to next lesson
+        success.style.display = 'block';
+        dropzones.forEach(zone => {
+            zone.style.border = '2px dashed #aaa'; // Always neutral gray border, even when correct
+        });
+        resetBtn.style.display = 'none';
+        submitBtn.style.display = '';
+        submitBtn.textContent = 'Continue';
+        submitBtn.type = 'button';
+        submitBtn.onclick = function() {
+            window.location.href = '/learn/2';
+        };
+        {% if lesson_id == 1 %}
+        submitBtn.onclick = function() {
+            window.location.href = '/learn/2';
+        };
+        {% elif lesson_id == 2 %}
+        submitBtn.onclick = function() {
+            window.location.href = '/learn/3';
+        };
+        {% endif %}
     }
+});
+
+    document.getElementById('rank-form').addEventListener('reset', function(e) {
+    setTimeout(() => {
+        draggableArea.innerHTML = initialDraggableAreaHTML;
+        enableDragDrop();
+        document.getElementById('feedback-message').style.display = 'none';
+        document.getElementById('success-message').style.display = 'none';
+        const continueBtn = document.getElementById('continueBtn');
+        const resetBtn = document.querySelector('.rank-reset-btn');
+        const submitBtn = document.querySelector('.rank-submit-btn');
+        if (continueBtn) continueBtn.style.display = 'none';
+        if (resetBtn) resetBtn.style.display = '';
+        if (submitBtn) submitBtn.style.display = '';
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.style.border = '2px dashed #aaa';
+        });
+    }, 0); // Wait for form reset
 });
 
 document.getElementById('rank-form').addEventListener('reset', function(e) {
@@ -119,5 +471,6 @@ document.getElementById('rank-form').addEventListener('reset', function(e) {
         document.getElementById('feedback-message').style.display = 'none';
     }, 0); // Wait for form reset
 });
+}
 </script>
 {% endblock %}
