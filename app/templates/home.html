@@ -6,7 +6,7 @@
         <div class="logo">Know Your Coffee</div>
         <div class="nav-links">
             <a href="{{ url_for('main.home') }}" class="nav-link active">HOME</a>
-            <a href="{{ url_for('main.quiz_start', question_id=1) }}" class="nav-link">QUIZ</a>
+            <a href="{{ url_for('main.quiz', question_id=1) }}" class="nav-link">QUIZ</a>
         </div>
     </nav>
 
@@ -14,7 +14,7 @@
         <div class="text-content">
             <h1>Uncover the nuances of every brew and find the coffee that suits you best.</h1>
             <p>Explore now and order with confidence.</p>
-            <a href="{{ url_for('main.learn_overview') }}" class="start-button">START LEARNING</a>
+            <a href="{{ url_for('main.learn_beverages') }}" class="start-button">START LEARNING</a>
         </div>
         <div class="image-container">
             <img src="{{ url_for('static', filename='images/coffee-composition.jpg') }}" alt="Coffee composition with beans and cups" class="feature-image">

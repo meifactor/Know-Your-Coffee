@@ -1,32 +1,53 @@
-[
-    {
-        "question": "What is the main purpose of this learning platform?",
-        "options": [
-            "To entertain",
-            "To educate",
-            "To sell products",
-            "To play games"
-        ],
-        "correct_answer": "To educate"
-    },
-    {
-        "question": "Which of these is a basic concept covered in lesson 2?",
-        "options": [
-            "Advanced mathematics",
-            "Fundamental concepts",
-            "Complex algorithms",
-            "Machine learning"
-        ],
-        "correct_answer": "Fundamental concepts"
-    },
-    {
-        "question": "What type of content is covered in lesson 3?",
-        "options": [
-            "Basic content",
-            "Intermediate content",
-            "Advanced material",
-            "Beginner tutorials"
-        ],
-        "correct_answer": "Advanced material"
-    }
-]
+{
+    "questions": [
+      {
+        "question": "What drink is this?",
+        "image": "latte.png",
+        "description": "This drink features espresso with a large amount of steamed milk and a thin layer of foam.",
+        "options": ["Latte", "Macchiato", "Cortado", "Flat White"],
+        "correct_answer": "Latte"
+      },
+      {
+        "question": "What drink is this?",
+        "image": "macchiato.png",
+        "description": "This small, bold drink has a shot or two of espresso and a spoonful of milk foam.",
+        "options": ["Macchiato", "Mocha", "Cappuccino", "Latte"],
+        "correct_answer": "Macchiato"
+      },
+      {
+        "question": "What drink is this?",
+        "image": "mocha.png",
+        "description": "This drink combines espresso, chocolate, steamed milk, and whipped cream.",
+        "options": ["Mocha", "Latte", "Americano", "Flat White"],
+        "correct_answer": "Mocha"
+      },
+      {
+        "question": "What drink is this?",
+        "image": "americano.png",
+        "description": "This espresso-based drink is diluted with hot water and has no milk.",
+        "type": "write_in",
+        "correct_answer": "Americano"
+      },
+      {
+        "question": "What drink is this?",
+        "image": "cortado.png",
+        "description": "This drink contains equal parts espresso and steamed milk, served in a small glass.",
+        "type": "write_in",
+        "correct_answer": "Cortado"
+      },
+      {
+        "question": "What drink is this?",
+        "image": "cappuccino.png",
+        "description": "This drink features equal parts espresso, steamed milk, and a thick layer of foam.",
+        "options": ["Cappuccino", "Macchiato", "Flat White", "Americano"],
+        "correct_answer": "Cappuccino"
+      },
+      {
+        "question": "What drink is this?",
+        "image": "flat-white.png",
+        "description": "This drink has microfoamed milk and a smooth texture, with more espresso flavor than a latte.",
+        "type": "write_in",
+        "correct_answer": "Flat White"
+      }
+    ]
+}
