@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, flash
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, flash, current_app
 import json
+import os
 
 main = Blueprint('main', __name__)
 
@@ -257,4 +258,16 @@ def learn_overview():
 
 @main.route('/learn/beverages')
 def learn_beverages():
-    return render_template('learn_beverages.html')
+    return render_template('interactive_coffee.html')
+
+@main.route('/learn/beverages/data')
+def interactive_coffee_data():
+    """Serve the JSON data for the interactive coffee page."""
+    data_path = os.path.join(
+        current_app.root_path,
+        'static', 'data',
+        'interactive_coffee.json'
+    )
+    with open(data_path, 'r') as f:
+        data = json.load(f)
+    return jsonify(data)

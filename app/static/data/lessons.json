@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Introduction",
+        "content": "<p>This is the first lesson. Welcome to our learning platform!</p><p>In this course, you will learn the fundamentals of our subject matter through interactive lessons and quizzes.</p>"
+    },
+    {
+        "title": "Basic Concepts",
+        "content": "<p>In this lesson, we'll cover the fundamental concepts.</p><p>We'll explore key ideas and principles that form the foundation of our subject.</p>"
+    },
+    {
+        "title": "Advanced Topics",
+        "content": "<p>Now we'll dive into more advanced material.</p><p>This lesson builds upon the concepts we learned in the previous sections and introduces more complex ideas.</p>"
+    }
+]

@@ -1,0 +1,166 @@
+[
+  {
+    "name": "Latte",
+    "description": "espresso, steamed milk, thin layer of foam",
+    "image": "/static/images/latte.png",
+    "hotspots": [
+      {
+        "label": "Espresso",
+        "x": 200,
+        "y": 200,
+        "info": "Strong espresso base for the latte."
+      },
+      {
+        "label": "Steamed Milk",
+        "x": 200,
+        "y": 80,
+        "info": "Smooth, creamy steamed milk."
+      },
+      {
+        "label": "Foam",
+        "x": 200,
+        "y": 20,
+        "info": "Thin layer of foam on top."
+      }
+    ]
+  },
+  {
+    "name": "Cappuccino",
+    "description": "espresso, steamed milk, thick layer of foam",
+    "image": "/static/images/cappuccino.png",
+    "hotspots": [
+      {
+        "label": "Steamed Milk",
+        "x": 200,
+        "y": 150,
+        "info": "milk."
+      },
+      {
+        "label": "Espresso",
+        "x": 200,
+        "y": 250,
+        "info": "Bold espresso foundation."
+      },
+      {
+        "label": "thick foam",
+        "x": 200,
+        "y": 20,
+        "info": "thick foam."
+      }
+    ]
+  },
+  {
+    "name": "Macchiato",
+    "description": "espresso, spoonful of milk foam",
+    "image": "/static/images/macchiato.png",
+    "hotspots": [
+      {
+        "label": "Foam",
+        "x": 60,
+        "y": 40,
+        "info": "Just a spoonful of foam."
+      },
+      {
+        "label": "Espresso",
+        "x": 60,
+        "y": 100,
+        "info": "Rich espresso shot."
+      }
+    ]
+  },
+  {
+    "name": "Americano",
+    "description": "espresso, hot water",
+    "image": "/static/images/americano.png",
+    "hotspots": [
+      {
+        "label": "Hot Water",
+        "x": 60,
+        "y": 60,
+        "info": "Diluted with hot water."
+      },
+      {
+        "label": "Espresso",
+        "x": 60,
+        "y": 120,
+        "info": "Classic espresso base."
+      }
+    ]
+  },
+  {
+    "name": "Mocha",
+    "description": "espresso, chocolate, steamed milk, whipped cream",
+    "image": "/static/images/mocha.png",
+    "hotspots": [
+      {
+        "label": "Whipped Cream",
+        "x": 80,
+        "y": 20,
+        "info": "Topped with whipped cream."
+      },
+      {
+        "label": "Chocolate",
+        "x": 70,
+        "y": 70,
+        "info": "Rich chocolate flavor."
+      },
+      {
+        "label": "Espresso",
+        "x": 70,
+        "y": 140,
+        "info": "Espresso shot inside."
+      }
+    ]
+  },
+  {
+    "name": "Cortado",
+    "description": "espresso, steamed milk (equal parts)",
+    "image": "/static/images/cortado.png",
+    "hotspots": [
+      {
+        "label": "Steamed Milk",
+        "x": 65,
+        "y": 80,
+        "info": "Equal parts milk and espresso."
+      },
+      {
+        "label": "Espresso",
+        "x": 65,
+        "y": 120,
+        "info": "Balanced espresso shot."
+      }
+    ]
+  },
+  {
+    "name": "Flat White",
+    "description": "espresso, microfoamed milk",
+    "image": "/static/images/flat-white.png",
+    "hotspots": [
+      {
+        "label": "Microfoam",
+        "x": 75,
+        "y": 60,
+        "info": "Fine microfoamed milk."
+      },
+      {
+        "label": "Espresso",
+        "x": 75,
+        "y": 130,
+        "info": "Smooth espresso."
+      }
+    ]
+  },
+  {
+    "name": "Doppio",
+    "description": "espresso (double shot)",
+    "image": "/static/images/doppio.png",
+    "hotspots": [
+      {
+        "label": "Double Espresso",
+        "x": 60,
+        "y": 100,
+        "info": "A bold double shot of espresso."
+      }
+    ]
+  }
+]

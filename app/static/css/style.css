@@ -1,3 +1,16 @@
+:root {
+    --main-color: #8b6147;
+  }
+
+  .bg-main {
+    background-color: var(--main-color);
+  }
+  
+  .text-main {
+    color: var(--main-color);
+  }
+
+
 .lesson-container, .quiz-container, .results-container {
     max-width: 800px;
     margin: 0 auto;
@@ -177,7 +190,7 @@ body {
 /* Home page specific styles */
 .home-container {
     min-height: 100vh;
-    background-color: #8B6147;
+    background-color: var(--main-color);
     position: relative;
     overflow: hidden;
 }
@@ -211,7 +224,7 @@ body {
 
 .nav-link.active {
     background-color: #E6D5C3;
-    color: #8B6147;
+    color: var(--main-color);
 }
 
 /* Main content styles */
@@ -244,7 +257,7 @@ body {
 .start-button {
     display: inline-block;
     background-color: #E6D5C3;
-    color: #8B6147;
+    color: var(--main-color);
     text-decoration: none;
     padding: 1rem 2rem;
     border-radius: 25px;

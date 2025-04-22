@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <!-- header bar -->
+  <div class="p-3 mb-4 bg-main">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 class="m-0 text-white">A guide to common espresso-based drinks</h2>
+      <div class="dropdown">
+        <button
+          class="btn dropdown-toggle text-white border border-white bg-transparent"
+          type="button"
+          id="learnDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Learn: Beverages
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end bg-dark border border-white">
+          <li><a class="dropdown-item text-white bg-dark" href="/">Home</a></li>
+          <li><a class="dropdown-item text-white bg-dark" href="/learn/beverages">Beverages</a></li>
+          <li><a class="dropdown-item text-white bg-dark" href="/learn/components">Components</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- style block for image & hotspot sizing -->
+  <style>
+    img {
+      width: 500px;
+      height: 500px;
+      object-fit: cover;
+    }
+    .image-container {
+      position: relative;
+      display: inline-block;
+    }
+    .hotspot {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 0, 0, 0.3);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .popup {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+
+  <h3 class="text-center mb-4">Click on each ingredient in the coffee cup to learn more about it</h3>
+
+  <div id="coffee-data">Loading...</div>
+  <div id="popup" class="popup"></div>
+
+  <!-- external JS -->
+  <script src="{{ url_for('static', filename='js/interactive_coffee.js') }}"></script>
+{% endblock %}
