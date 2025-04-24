@@ -3,51 +3,58 @@
       {
         "question": "What drink is this?",
         "image": "latte.png",
-        "description": "This drink features espresso with a large amount of steamed milk and a thin layer of foam.",
+        "description": "This drink combines espresso with a large amount of steamed milk (as taught in the lessons) and a thin layer of foam.",
         "options": ["Latte", "Macchiato", "Cortado", "Flat White"],
         "correct_answer": "Latte"
       },
       {
         "question": "What drink is this?",
         "image": "macchiato.png",
-        "description": "This small, bold drink has a shot or two of espresso and a spoonful of milk foam.",
+        "description": "This small, bold drink has a shot of espresso and a small amount of foamed milk on top.",
         "options": ["Macchiato", "Mocha", "Cappuccino", "Latte"],
         "correct_answer": "Macchiato"
       },
       {
         "question": "What drink is this?",
         "image": "mocha.png",
-        "description": "This drink combines espresso, chocolate, steamed milk, and whipped cream.",
+        "description": "This drink combines espresso, chocolate, steamed milk (for creamy texture), and whipped cream.",
         "options": ["Mocha", "Latte", "Americano", "Flat White"],
         "correct_answer": "Mocha"
       },
       {
         "question": "What drink is this?",
         "image": "americano.png",
-        "description": "This espresso-based drink is diluted with hot water and has no milk.",
+        "description": "This espresso-based drink is diluted with hot water and has no steamed or foamed milk.",
         "type": "write_in",
         "correct_answer": "Americano"
       },
       {
         "question": "What drink is this?",
         "image": "cortado.png",
-        "description": "This drink contains equal parts espresso and steamed milk, served in a small glass.",
+        "description": "This drink contains equal parts espresso and steamed milk (as covered in the milk lesson), served in a small glass.",
         "type": "write_in",
         "correct_answer": "Cortado"
       },
       {
         "question": "What drink is this?",
         "image": "cappuccino.png",
-        "description": "This drink features equal parts espresso, steamed milk, and a thick layer of foam.",
+        "description": "This drink features equal parts espresso, steamed milk, and foamed milk (combining both milk techniques from the lessons).",
         "options": ["Cappuccino", "Macchiato", "Flat White", "Americano"],
         "correct_answer": "Cappuccino"
       },
       {
         "question": "What drink is this?",
         "image": "flat-white.png",
-        "description": "This drink has microfoamed milk and a smooth texture, with more espresso flavor than a latte.",
+        "description": "This drink has microfoamed milk (a technique between steaming and foaming) and a smooth texture, with more espresso flavor than a latte.",
         "type": "write_in",
         "correct_answer": "Flat White"
+      },
+      {
+        "question": "What drink is this?",
+        "image": "doppio.png",
+        "description": "A double shot of espresso, demonstrating the concentrated coffee extraction method taught in the espresso lesson.",
+        "type": "write_in",
+        "correct_answer": "Doppio"
       }
     ]
 }

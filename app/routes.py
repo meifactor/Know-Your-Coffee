@@ -123,7 +123,12 @@ def quiz(question_id):
             flash("Please select an answer or skip the question.", "error")
             return redirect(url_for('main.quiz', question_id=question_id))
         else:
-            is_correct = answer == questions[question_id-1]['correct_answer']
+            # Make comparison case-insensitive for write-in answers
+            if 'type' in questions[question_id-1] and questions[question_id-1]['type'] == 'write_in':
+                is_correct = answer.lower() == questions[question_id-1]['correct_answer'].lower()
+            else:
+                is_correct = answer == questions[question_id-1]['correct_answer']
+            
             session[f'q{question_id}_answer'] = answer
             session[f'q{question_id}_correct'] = is_correct
             
@@ -136,13 +141,13 @@ def quiz(question_id):
             if is_correct:
                 feedback = {
                     'type': 'correct',
-                    'message': "<strong>Correct!</strong> Well done!",
+                    'message': f"<strong>Correct!</strong> This is a <strong>{questions[question_id-1]['correct_answer']}</strong>!",
                     'description': questions[question_id-1]['description']
                 }
             else:
                 feedback = {
                     'type': 'incorrect',
-                    'message': f"Not quite. You answered: <strong>{answer}</strong>. The correct answer was <strong>{questions[question_id-1]['correct_answer']}</strong>.",
+                    'message': f"Not quite. You answered <strong>{answer}</strong>. The correct answer was <strong>{questions[question_id-1]['correct_answer']}</strong>.",
                     'description': questions[question_id-1]['description']
                 }
             
@@ -231,7 +236,11 @@ def results():
     for i, question in enumerate(questions, 1):
         user_answer = session.get(f'q{i}_answer')
         skipped = user_answer is None
-        correct = False if skipped else user_answer == question['correct_answer']
+        # Make comparison case-insensitive for write-in answers
+        if not skipped and 'type' in question and question['type'] == 'write_in':
+            correct = user_answer.lower() == question['correct_answer'].lower()
+        else:
+            correct = False if skipped else user_answer == question['correct_answer']
         if correct:
             score += 1
             
