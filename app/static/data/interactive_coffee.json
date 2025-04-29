@@ -1,5 +1,24 @@
 [
   {
+    "name": "Americano",
+    "description": "A shot of espresso topped up with hot water",
+    "image": "/static/images/americano.svg",
+    "hotspots": [
+      {
+        "id": "espresso",
+        "label": "Espresso",
+        "fillColor": "#5b4323",
+        "info": "Classic espresso base."
+      },
+      {
+        "id": "hot_water",
+        "label": "Hot Water",
+        "fillColor": "#83b4cc",
+        "info": "Hot water."
+      }
+    ]
+  },  
+  {
     "name": "Latte",
     "description": "espresso, steamed milk, thin layer of foam",
     "image": "/static/images/latte.png",
@@ -65,25 +84,6 @@
         "x": 60,
         "y": 100,
         "info": "Rich espresso shot."
-      }
-    ]
-  },
-  {
-    "name": "Americano",
-    "description": "espresso, hot water",
-    "image": "/static/images/americano.png",
-    "hotspots": [
-      {
-        "label": "Hot Water",
-        "x": 60,
-        "y": 60,
-        "info": "Diluted with hot water."
-      },
-      {
-        "label": "Espresso",
-        "x": 60,
-        "y": 120,
-        "info": "Classic espresso base."
       }
     ]
   },

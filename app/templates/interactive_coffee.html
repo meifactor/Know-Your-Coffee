@@ -24,27 +24,26 @@
     </div>
   </div>
 
-  <!-- style block for image & hotspot sizing -->
+  <!-- style block for image, popup & pulse animation -->
   <style>
-    img {
+    /* force all SVGs/images to be 500×500 */
+    img,
+    svg {
       width: 500px;
       height: 500px;
       object-fit: cover;
     }
-    .image-container {
+
+    /* container to position popup & button, centered */
+    #coffee-container {
       position: relative;
-      display: inline-block;
+      width: 500px;
+      margin: 0 auto;
+      text-align: center;
     }
-    .hotspot {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: rgba(255, 0, 0, 0.3);
-      border-radius: 50%;
-      cursor: pointer;
-    }
+
     .popup {
-      position: absolute;
+      position: fixed; /* offsets map to viewport */
       background: #fff;
       border: 1px solid #ccc;
       padding: 10px;
@@ -53,12 +52,72 @@
       display: none;
       z-index: 1000;
     }
+
+    /* preserve pointer cursor on hotspots */
+    .image-container [fill="#5b4323"],
+    .image-container [fill="#83b4cc"] {
+      cursor: pointer;
+    }
+
+    /* base hotspot transform settings */
+    .hotspot {
+      cursor: pointer;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    /* pulse animation */
+    @keyframes pulse {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(0.98); }
+      100% { transform: scale(1.02); }
+    }
+    .pulse-animation {
+      animation: pulse 1.5s infinite ease-in-out alternate;
+      opacity: 0.7;
+    }
+
+    /* Continue button: remove underline, light gray when disabled */
+    #continue-btn {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      text-decoration: none !important;
+      border: none;
+      background: none;
+      color: #898f95; /* bootstrap text-muted */
+      cursor: default;
+    }
+    #continue-btn:disabled {
+      cursor: default;
+    }
+
+    /* when we add .enabled, switch to real button styling */
+    #continue-btn.enabled {
+      background-color: #8b6147;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+    }
   </style>
 
-  <h3 class="text-center mb-4">Click on each ingredient in the coffee cup to learn more about it</h3>
+  <h3 class="text-center mb-4">
+    Click on each ingredient in the <br> coffee cup to learn more about it
+  </h3>
 
-  <div id="coffee-data">Loading...</div>
-  <div id="popup" class="popup"></div>
+  <div id="coffee-container">
+    <div id="coffee-data">Loading...</div>
+    <div id="popup" class="popup"></div>
+
+    <!-- starts disabled/light-gray text -->
+    <button
+      id="continue-btn"
+      disabled
+    >
+      Continue
+    </button>
+  </div>
 
   <!-- external JS -->
   <script src="{{ url_for('static', filename='js/interactive_coffee.js') }}"></script>
