@@ -20,146 +20,152 @@
   },  
   {
     "name": "Latte",
-    "description": "espresso, steamed milk, thin layer of foam",
-    "image": "/static/images/latte.png",
+    "description": "Espresso, steamed milk, thin layer of foam",
+    "image": "/static/images/latte.svg",
     "hotspots": [
       {
+        "id": "espresso",
         "label": "Espresso",
-        "x": 200,
-        "y": 200,
+        "fillColor": "#594223",
         "info": "Strong espresso base for the latte."
       },
       {
+        "id": "steamed_milk",
         "label": "Steamed Milk",
-        "x": 200,
-        "y": 80,
+        "fillColor": "#FED8B2",
         "info": "Smooth, creamy steamed milk."
       },
       {
+        "id": "foam",
         "label": "Foam",
-        "x": 200,
-        "y": 20,
+        "fillColor": "#FEF0D5",
         "info": "Thin layer of foam on top."
       }
     ]
-  },
+  },  
   {
     "name": "Cappuccino",
-    "description": "espresso, steamed milk, thick layer of foam",
-    "image": "/static/images/cappuccino.png",
+    "description": "Espresso, steamed milk, thick layer of foam",
+    "image": "/static/images/cappuccino.svg",
     "hotspots": [
       {
-        "label": "Steamed Milk",
-        "x": 200,
-        "y": 150,
-        "info": "milk."
-      },
-      {
+        "id": "espresso",
         "label": "Espresso",
-        "x": 200,
-        "y": 250,
+        "fillColor": "#594223",
         "info": "Bold espresso foundation."
       },
       {
-        "label": "thick foam",
-        "x": 200,
-        "y": 20,
-        "info": "thick foam."
+        "id": "steamed_milk",
+        "label": "Steamed Milk",
+        "fillColor": "#FED8B2",
+        "info": "Milk."
+      },
+      {
+        "id": "foam",
+        "label": "Thick Foam",
+        "fillColor": "#FEF0D5",
+        "info": "Thick foam."
       }
     ]
-  },
+  },  
   {
     "name": "Macchiato",
-    "description": "espresso, spoonful of milk foam",
-    "image": "/static/images/macchiato.png",
+    "description": "Espresso, spoonful of milk foam",
+    "image": "/static/images/macchiato.svg",
     "hotspots": [
       {
-        "label": "Foam",
-        "x": 60,
-        "y": 40,
-        "info": "Just a spoonful of foam."
+        "id": "espresso",
+        "label": "Espresso",
+        "fillColor": "#594223",
+        "info": "Rich espresso shot."
       },
       {
-        "label": "Espresso",
-        "x": 60,
-        "y": 100,
-        "info": "Rich espresso shot."
+        "id": "foam",
+        "label": "Foam",
+        "fillColor": "#FEF0D5",
+        "info": "Just a spoonful of foam."
       }
     ]
-  },
+  },  
   {
     "name": "Mocha",
-    "description": "espresso, chocolate, steamed milk, whipped cream",
-    "image": "/static/images/mocha.png",
+    "description": "Espresso, chocolate, steamed milk, whipped cream",
+    "image": "/static/images/mocha.svg",
     "hotspots": [
       {
-        "label": "Whipped Cream",
-        "x": 80,
-        "y": 20,
-        "info": "Topped with whipped cream."
+        "id": "espresso",
+        "label": "Espresso",
+        "fillColor": "#594223",
+        "info": "Espresso shot inside."
       },
       {
+        "id": "chocolate",
         "label": "Chocolate",
-        "x": 70,
-        "y": 70,
+        "fillColor": "#AD6E38",
         "info": "Rich chocolate flavor."
       },
       {
-        "label": "Espresso",
-        "x": 70,
-        "y": 140,
-        "info": "Espresso shot inside."
-      }
-    ]
-  },
-  {
-    "name": "Cortado",
-    "description": "espresso, steamed milk (equal parts)",
-    "image": "/static/images/cortado.png",
-    "hotspots": [
-      {
-        "label": "Steamed Milk",
-        "x": 65,
-        "y": 80,
-        "info": "Equal parts milk and espresso."
+        "id": "whipped_cream",
+        "label": "Whipped Cream",
+        "fillColor": "#FBE9CD",
+        "info": "Topped with whipped cream."
       },
       {
+        "id": "steamed_milk",
+        "label": "Steamed Milk",
+        "fillColor": "#FED8B2",
+        "info": "Milk."
+      }
+    ]
+  },  
+  {
+    "name": "Cortado",
+    "description": "Espresso and steamed milk in equal parts",
+    "image": "/static/images/cortado.svg",
+    "hotspots": [
+      {
+        "id": "espresso",
         "label": "Espresso",
-        "x": 65,
-        "y": 120,
-        "info": "Balanced espresso shot."
+        "fillColor": "#594223",
+        "info": "two shots of espresso."
+      },
+      {
+        "id": "steamed_milk",
+        "label": "Steamed Milk",
+        "fillColor": "#FED8B2",
+        "info": "Equal part of milk"
       }
     ]
   },
   {
     "name": "Flat White",
-    "description": "espresso, microfoamed milk",
-    "image": "/static/images/flat-white.png",
+    "description": "Double espresso with milk. 1:2 ratio of milk to espresso",
+    "image": "/static/images/flat-white.svg",
     "hotspots": [
       {
-        "label": "Microfoam",
-        "x": 75,
-        "y": 60,
-        "info": "Fine microfoamed milk."
+        "id": "espresso",
+        "label": "Espresso",
+        "fillColor": "#594223",
+        "info": "two shots of espresso."
       },
       {
-        "label": "Espresso",
-        "x": 75,
-        "y": 130,
-        "info": "Smooth espresso."
+        "id": "steamed_milk",
+        "label": "Steamed Milk",
+        "fillColor": "#FED8B2",
+        "info": "some milk"
       }
     ]
-  },
+  },  
   {
     "name": "Doppio",
     "description": "espresso (double shot)",
-    "image": "/static/images/doppio.png",
+    "image": "/static/images/doppio.svg",
     "hotspots": [
       {
-        "label": "Double Espresso",
-        "x": 60,
-        "y": 100,
-        "info": "A bold double shot of espresso."
+        "id": "espresso",
+        "label": "Espresso",
+        "fillColor": "#594223",
+        "info": "two shots of espresso."
       }
     ]
   }

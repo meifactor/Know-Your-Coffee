@@ -21,6 +21,7 @@ $(document).ready(function () {
     currentIndex = index;
     const coffee   = coffeeData[index];
     const hotspots = coffee.hotspots || [];
+    $("#coffee-name").text(coffee.name);
 
     // reset Continue button
     $continue
