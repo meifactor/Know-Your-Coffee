@@ -1,22 +1,22 @@
 [
   {
     "title": "Espresso",
-    "content": "<p>Concentrated coffee made by forcing hot water through finely-ground coffee, bolder than brewed coffee.</p>",
+    "content": "<p>Espresso is a concentrated coffee made by forcing hot water through finely-ground coffee beans. It's the foundation of most coffee drinks and has a bold, rich flavor. A standard shot uses about 7g of coffee and yields 30ml of liquid.</p>",
     "gif": "https://i.gifer.com/origin/ac/ac83910ffc9eaf2a934df34d0a393fa8.gif"
   },
   {
     "title": "Ristretto",
-    "content": "<p>A short shot of espresso, using less water and producing a more concentrated flavor.</p>",
+    "content": "<p>A ristretto is a short shot of espresso, using the same amount of coffee but half the water, resulting in a more concentrated and sweeter flavor. It's perfect for those who prefer a stronger coffee taste.</p>",
     "gif": "https://about.starbucks.com/uploads/2025/01/Ristretto-Shot.gif"
   },
   {
     "title": "Foamed Milk",
-    "content": "<p>Milk that has been aerated to create a light, frothy texture for drinks like cappuccinos.</p>",
+    "content": "<p>Foamed milk is created by introducing air into milk using a steam wand, creating a light, frothy texture. This technique is essential for drinks like cappuccinos and macchiatos. The ideal foam should be velvety and hold its shape.</p>",
     "gif": "https://s.yimg.com/ny/api/res/1.2/bk_4fuw.gDrEG4DNfHnewA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU0MQ--/https://media.zenfs.com/en-US/homerun/spoon_university_184/6bd732b73f4213523975b46abbe015bc"
   },
   {
     "title": "Steamed Milk",
-    "content": "<p>Milk heated with steam to create a creamy texture, used in lattes and other drinks.</p>",
+    "content": "<p>Steamed milk is heated and aerated using a steam wand to create a creamy, velvety texture. This technique is crucial for lattes and flat whites. The milk should reach about 150°F (65°C) for optimal sweetness and texture.</p>",
     "gif": "https://media.giphy.com/media/t3tTsNV1y2XRYPDyOX/giphy.gif"
   }
 ]
