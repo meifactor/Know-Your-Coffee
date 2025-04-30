@@ -3,56 +3,56 @@
       {
         "question": "What drink is this?",
         "image": "latte.png",
-        "description": "This drink combines espresso with a large amount of steamed milk (as taught in the lessons) and a thin layer of foam.",
+        "description": "This drink combines a shot of espresso with a large amount of steamed milk and a thin layer of foam. The ratio is typically 1:3:1 (espresso:steamed milk:foam), creating a creamy texture with a mild coffee flavor.",
         "options": ["Latte", "Macchiato", "Cortado", "Flat White"],
         "correct_answer": "Latte"
       },
       {
         "question": "What drink is this?",
         "image": "macchiato.png",
-        "description": "This small, bold drink has a shot of espresso and a small amount of foamed milk on top.",
+        "description": "This small, bold drink consists of a shot of espresso 'marked' with a small amount of foamed milk. The traditional ratio is about 90% espresso to 10% milk, creating a strong coffee flavor with a touch of creaminess.",
         "options": ["Macchiato", "Mocha", "Cappuccino", "Latte"],
         "correct_answer": "Macchiato"
       },
       {
         "question": "What drink is this?",
         "image": "mocha.png",
-        "description": "This drink combines espresso, chocolate, steamed milk (for creamy texture), and whipped cream.",
+        "description": "This drink combines espresso, chocolate (usually in the form of chocolate syrup or powder), steamed milk, and is often topped with whipped cream. It's essentially a chocolate-flavored latte, perfect for those who enjoy a sweet coffee drink.",
         "options": ["Mocha", "Latte", "Americano", "Flat White"],
         "correct_answer": "Mocha"
       },
       {
         "question": "What drink is this?",
         "image": "americano.png",
-        "description": "This espresso-based drink is diluted with hot water and has no steamed or foamed milk.",
+        "description": "This drink is made by diluting espresso with hot water, creating a beverage similar to drip coffee but with espresso's distinct flavor profile. The standard ratio is 1:2 (espresso:water), though this can vary based on preference.",
         "type": "write_in",
         "correct_answer": "Americano"
       },
       {
         "question": "What drink is this?",
         "image": "cortado.png",
-        "description": "This drink contains equal parts espresso and steamed milk (as covered in the milk lesson), served in a small glass.",
+        "description": "This drink contains equal parts espresso and steamed milk, served in a small glass. The name comes from the Spanish word 'cortar' (to cut), referring to how the milk cuts the intensity of the espresso. It's typically served in a 4-5oz glass.",
         "type": "write_in",
         "correct_answer": "Cortado"
       },
       {
         "question": "What drink is this?",
         "image": "cappuccino.png",
-        "description": "This drink features equal parts espresso, steamed milk, and foamed milk (combining both milk techniques from the lessons).",
+        "description": "This drink features equal parts espresso, steamed milk, and foamed milk. The perfect version has a 1:1:1 ratio, creating a balanced drink with distinct layers. It's traditionally served in a 6oz cup.",
         "options": ["Cappuccino", "Macchiato", "Flat White", "Americano"],
         "correct_answer": "Cappuccino"
       },
       {
         "question": "What drink is this?",
         "image": "flat-white.png",
-        "description": "This drink has microfoamed milk (a technique between steaming and foaming) and a smooth texture, with more espresso flavor than a latte.",
+        "description": "This drink features microfoamed milk (a technique between steaming and foaming) and has a higher proportion of espresso to milk than a latte. It's known for its velvety texture and strong coffee flavor, typically served in a 5-6oz cup.",
         "type": "write_in",
         "correct_answer": "Flat White"
       },
       {
         "question": "What drink is this?",
         "image": "doppio.png",
-        "description": "A double shot of espresso, demonstrating the concentrated coffee extraction method taught in the espresso lesson.",
+        "description": "A double shot of espresso, demonstrating the concentrated coffee extraction method. A standard doppio uses about 14g of coffee and yields 60ml of liquid, creating an intense coffee experience.",
         "type": "write_in",
         "correct_answer": "Doppio"
       }

@@ -227,6 +227,12 @@ body {
     color: var(--main-color);
 }
 
+/* Add hover effect for nav links */
+.nav-link:hover {
+    background-color: #E6D5C3;
+    color: var(--main-color);
+}
+
 /* Main content styles */
 .main-content {
     display: flex;
