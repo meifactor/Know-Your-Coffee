@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="home-container">
+    <div class="congrats-content">
+        <div class="text-content">
+            <div class="message-section">
+                <h1>Congratulations!</h1>
+                <h2>You've completed the Components section</h2>
+                <p>You now have a solid understanding of the <strong>fundamental elements</strong> that make up our coffee beverages.</p>
+            </div>
+
+            <div class="button-stack">
+                <a href="{{ url_for('main.learn_beverages') }}" class="primary-button">
+                    Continue to Beverages
+                </a>
+                <a href="{{ url_for('main.learn_overview') }}" class="secondary-button">
+                    Review Components
+                </a>
+                <a href="{{ url_for('main.home') }}" class="tertiary-button">
+                    Return Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Additional styles specific to congrats page */
+.congrats-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px);
+    padding: 2rem 4rem;
+}
+
+.text-content {
+    max-width: 600px;
+    text-align: center;
+}
+
+.message-section {
+    margin-bottom: 3rem;
+}
+
+.text-content h1 {
+    color: #E6D5C3;
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.text-content h2 {
+    color: #E6D5C3;
+    font-size: 2rem;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.text-content p {
+    color: #E6D5C3;
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    opacity: 0.85;
+}
+
+.text-content strong {
+    font-weight: 600;
+    opacity: 1;
+}
+
+.button-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.primary-button, .secondary-button, .tertiary-button {
+    display: block;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.primary-button {
+    background-color: #E6D5C3;
+    color: var(--main-color);
+    font-size: 1.2rem;
+    padding: 1.2rem 2rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(230, 213, 195, 0.2);
+}
+
+.secondary-button {
+    background-color: transparent;
+    color: #E6D5C3;
+    border: 2px solid #E6D5C3;
+}
+
+.tertiary-button {
+    background-color: transparent;
+    color: #E6D5C3;
+    opacity: 0.8;
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(230, 213, 195, 0.3);
+}
+
+.secondary-button:hover {
+    background-color: rgba(230, 213, 195, 0.1);
+    transform: translateY(-1px);
+}
+
+.tertiary-button:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .congrats-content {
+        padding: 2rem;
+    }
+
+    .text-content h1 {
+        font-size: 2.8rem;
+    }
+
+    .text-content h2 {
+        font-size: 1.8rem;
+    }
+    
+    .text-content p {
+        font-size: 1.1rem;
+    }
+
+    .button-stack {
+        max-width: 100%;
+    }
+}
+</style>
+{% endblock %} 

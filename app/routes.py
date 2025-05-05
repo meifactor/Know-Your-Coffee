@@ -28,6 +28,8 @@ def learn_lesson(lesson_id):
     if lesson_id == 2:
         items = ["Steamed Milk", "Foamed Milk"]
         return render_template('learn_lesson.html', items=items, lesson_id=lesson_id)
+    if lesson_id == 3:
+        return render_template('congrats.html')
     # For all other lessons, show a simple detail page (or fallback to learn.html)
     lesson = lessons[lesson_id-1]
     return render_template('lesson_detail.html', lesson=lesson, lesson_id=lesson_id)
