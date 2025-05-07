@@ -22,7 +22,12 @@
                 <div class="progress-text">Question {{ current_question }} of {{ total_questions }}</div>
             </div>
 
-            <div class="quiz-section">
+            <style>
+.quiz-section, .quiz-section * {
+    font-family: 'Helvetica Neue', Arial, sans-serif !important;
+}
+</style>
+<div class="quiz-section">
                 <!-- Question Section -->
                 <div class="question-content">
                     <h3 class="question-title">{{ question.question }}</h3>

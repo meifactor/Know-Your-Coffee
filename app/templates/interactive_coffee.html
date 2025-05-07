@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    body, .home-container {
+        background: #96684a !important;
+    }
+</style>
 <div class="home-container">
     <nav class="navigation">
         <div class="logo"><a href="{{ url_for('main.home') }}" style="color: inherit; text-decoration: none;">Know Your Coffee</a></div>
@@ -11,21 +16,18 @@
     </nav>
 
     <div class="interactive-container">
-        <div class="progress-section">
-            <div class="progress-dots" id="progress-dots"></div>
-            <div class="progress-text">Click on each ingredient to learn more</div>
-        </div>
-
-        <div class="coffee-section">
-            <h3 class="coffee-title" id="coffee-name"></h3>
-            
-            <div id="coffee-container">
+        <div id="beverage-button-row" class="button-row" style="margin-bottom: 0.5rem;"></div>
+        <div style="height: 0; margin-bottom: 0;"></div>
+        <div class="coffee-section" style="margin-top: 0;">
+            <div class="tan-bg" id="coffee-container">
+                <h3 class="coffee-title brown-title" id="coffee-name"></h3>
+                <div class="instruction-text" style="font-size:1.1rem; color:#8B6147; font-weight:500; margin-bottom:0.5em;">Click on all components</div>
                 <div id="coffee-data">Loading...</div>
                 <div id="popup" class="popup"></div>
             </div>
 
             <div class="action-buttons">
-                <button id="continue-btn" disabled>Continue</button>
+                <a id="continue-btn" class="start-button" style="background: #E6D5C3; color: #8B6147; pointer-events: none; opacity: 0.6;" tabindex="-1">View all components to continue</a>
             </div>
         </div>
 
@@ -77,9 +79,59 @@
     border-color: #8B6147;
 }
 
-.progress-text {
+.beverage-btn, .learn-btn {
+    background: #E6D5C3;
+    color: #8B6147;
+    border: none;
+    border-radius: 18px;
+    padding: 0.5em 1.7em;
+    font-size: 1.15em;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(139, 97, 71, 0.07);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    outline: none;
+    margin: 0 0.15em;
+    white-space: nowrap;
+}
+
+/* Make sure Flat White stays on one line */
+#bev-btn-6 {
+    white-space: nowrap;
+}
+.beverage-btn.clicked, .learn-btn.clicked {
+    background: #8B6147;
     color: #E6D5C3;
+    opacity: 0.8;
+}
+.beverage-btn:hover, .learn-btn:hover, .beverage-btn:focus, .learn-btn:focus {
+    background: #8B6147;
+    color: #E6D5C3;
+    box-shadow: 0 4px 16px rgba(139, 97, 71, 0.12);
+}
+
+    background: #e8d1b0;
+    color: #8B6147;
+    border-radius: 18px;
+    border: none;
+    font-weight: 600;
+    padding: 0.5em 1em;
+    font-size: 1em;
+    transition: background 0.2s, color 0.2s;
+    margin: 0 0.15em;
+    box-shadow: 0 2px 8px rgba(139, 97, 71, 0.07);
+    cursor: pointer;
+}
+.beverage-btn.clicked {
+    background: #8B6147;
+    color: #e8d1b0;
+}
+
+.progress-text {
+    color: #8B6147;
     font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 1.5em;
     font-weight: 500;
 }
 
@@ -89,6 +141,70 @@
 }
 
 .coffee-title {
+    color: #8B6147;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.05em;
+    margin-top: 0.05em;
+    text-align: center;
+}
+.brown-title {
+    color: #8B6147 !important;
+}
+.subtitle {
+    color: #8B6147;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+    font-weight: 500;
+}
+.tan-bg {
+    background: #E6D5C3;
+    border-radius: 18px;
+    padding-top: 3em;
+    margin-top: 2.5em;
+    margin-bottom: 1.5em;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    width: 60%;
+}
+#coffee-data {
+    margin-top: 0.2em;
+}
+
+.tan-bg * {
+    color: #8B6147 !important;
+}
+.continue-start-button {
+    background: #E6D5C3;
+    color: #8B6147;
+    border: none;
+    border-radius: 40px;
+    font-size: 1.7em;
+    font-weight: 700;
+    padding: 0.9em 2.5em;
+    margin: 2em auto 2em auto;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(139, 97, 71, 0.07);
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    width: 80%;
+    max-width: 600px;
+}
+.start-button[disabled], .start-button[tabindex="-1"], .start-button[style*="pointer-events: none"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+.continue-tan-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
     color: #E6D5C3;
     font-size: 2rem;
     margin-bottom: 2rem;
@@ -158,6 +274,32 @@ img, svg {
 .pulse-animation {
     animation: pulse 1.5s infinite ease-in-out alternate;
     opacity: 0.7;
+}
+
+
+    background: #E6D5C3;
+    color: #8B6147;
+    padding: 1.2rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 25px;
+    margin: 2.5em auto 3.5em auto;
+    display: block;
+    box-shadow: 0 4px 12px rgba(230, 213, 195, 0.2);
+    text-align: center;
+    width: fit-content;
+    max-width: 100%;
+    border: none;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.continue-tan-btn[disabled], .continue-tan-btn[tabindex="-1"], .continue-tan-btn[style*="pointer-events: none"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+.continue-tan-btn:not([disabled]):hover, .continue-tan-btn:not([tabindex="-1"]):hover {
+    background: #f6e3c6;
+    color: #8B6147;
+    box-shadow: 0 6px 16px rgba(230, 213, 195, 0.3);
 }
 
 .action-buttons {
