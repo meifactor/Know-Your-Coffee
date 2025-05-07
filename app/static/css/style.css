@@ -58,6 +58,11 @@ body {
     padding-top: 40px;
 }
 
+.learn-lesson-btn-row {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .button-row {
     display: flex;
     gap: 2rem;
@@ -142,17 +147,7 @@ body {
     color: #B4865B;
 }
 
-/* Rank buttons for interactive lesson */
-.rank-reset-btn {
-    padding: 0.5em 2em;
-    font-size: 1.1em;
-    border: 1.5px solid #888;
-    background: #fff;
-    color: #444;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
-}
+
 
 .rank-reset-btn:hover, .rank-reset-btn:focus {
     background: #e6d5c3;

@@ -11,7 +11,7 @@
     <div class="lesson-container" style="text-align: center;">
     
     {% if lesson_id == 2 %}
-    <h1 style="margin-top: 2em;">Drag the milk types to complete the sentence:</h1>
+    <h1 style="margin-top: 2em; color: #fff;">Drag the milk types to complete the sentence:</h1>
     <div style="margin-bottom: 1.5em; display: flex; justify-content: center; gap: 2em;">
         <div draggable="true" class="draggable-milk" id="milk-steamed">Steamed Milk</div>
         <div draggable="true" class="draggable-milk" id="milk-foamed">Foamed Milk</div>
@@ -31,12 +31,27 @@
             <div id="success-message" style="display: none; color: #228B22; font-size: 1.2em; font-weight: bold; text-align: left; margin-bottom: 0.5em;"><span style="font-size:1.2em;">&#10003;</span> Awesome!</div>
         </div>
 
-        <div class="navigation-buttons">
+        <div class="navigation-buttons" style="display: flex; justify-content: flex-end; gap: 1em;">
             <button type="button" class="btn btn-secondary rank-reset-btn">Reset</button>
-            <button type="submit" class="btn btn-primary rank-submit-btn" id="submit-continue-btn">Submit</button>
+            <button type="submit" class="btn rank-submit-btn custom-submit-btn" id="submit-continue-btn">Submit</button>
         </div>
     </form>
     <style>
+    .rank-reset-btn {
+        background: var(--color-primary) !important;
+        color: #e8d1b0 !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 0.5rem 1rem !important;
+        font-weight: normal !important;
+        transition: all 0.3s ease !important;
+        box-shadow: none !important;
+    }
+    .rank-reset-btn:hover, .rank-reset-btn:focus {
+        background: var(--color-light) !important;
+        color: #e8d1b0 !important;
+    }
+
     .draggable-milk {
         user-select: none;
         transition: box-shadow 0.2s;
@@ -50,7 +65,106 @@
         line-height: 1.2;
         margin: 0;
     }
-    .draggable-milk.dragging {
+    .draggable-milk,
+.draggable-milk:active,
+.draggable-milk:focus,
+.draggable-milk:hover,
+.draggable-milk.dragging {
+    background: #e8d1b0 !important;
+    color: #222 !important; 
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    font-size: 0.95em !important;
+    width: 160px !important;
+    height: 41px !important;
+    margin: 0 !important;
+    transition: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+}
+
+.drop-blank,
+.drop-blank:active,
+.drop-blank:focus,
+.drop-blank:hover,
+.drop-blank.active,
+.drop-blank.possible-drop-target {
+    background: #fff !important;
+    border: 2px dashed #aaa !important;
+    box-shadow: none !important;
+    min-width: 150px !important;
+    min-height: 41px !important;
+    width: 150px !important;
+    height: 41px !important;
+    transition: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 0 !important;
+}
+
+.drop-blank,
+.drop-blank:active,
+.drop-blank:focus,
+.drop-blank:hover,
+.drop-blank.active,
+.drop-blank.possible-drop-target {
+    background: #fff !important;
+    border: 2px dashed #aaa !important;
+    box-shadow: none !important;
+    min-width: 145px !important;
+    min-height: 41px !important;
+    width: 145px !important;
+    height: 41px !important;
+    transition: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 0 !important;
+}
+
+.drop-blank,
+.drop-blank:active,
+.drop-blank:focus,
+.drop-blank:hover,
+.drop-blank.active,
+.drop-blank.possible-drop-target {
+    background: #fff !important;
+    border: 2px dashed #aaa !important;
+    box-shadow: none !important;
+    min-width: 140px !important;
+    min-height: 36px !important;
+    width: 140px !important;
+    height: 36px !important;
+    transition: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 0 !important;
+}
+
+.drop-blank,
+.drop-blank:active,
+.drop-blank:focus,
+.drop-blank:hover,
+.drop-blank.active,
+.drop-blank.possible-drop-target {
+    background: #fff !important;
+    border: 2px dashed #aaa !important;
+    box-shadow: none !important;
+    min-width: 140px !important;
+    min-height: 36px !important;
+    transition: none !important;
+}
+
+.draggable-milk.dragging {
         opacity: 0.7;
         box-shadow: 0 4px 14px rgba(139,97,71,0.18);
         border: 2px solid #a86e2a;
@@ -94,7 +208,25 @@
     background: #fff;
     color: inherit;
 }
-    </style>
+    .custom-submit-btn {
+    background: #e8d1b0 !important;
+    color: #8B6147 !important;
+    border-radius: 18px !important;
+    border: none !important;
+    font-size: 1.15rem !important;
+    font-weight: 400;
+    padding: 0 !important;
+    box-shadow: 0 2px 8px rgba(139, 97, 71, 0.07) !important;
+    cursor: pointer !important;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s !important;
+    outline: none !important;
+}
+.custom-submit-btn:hover, .custom-submit-btn:focus {
+    background: #f6e3c6 !important;
+    color: #8B6147 !important;
+}
+
+</style>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Make lesson_id available to JS
@@ -249,9 +381,9 @@
         </div>
         <div id="feedback-message" style="color: #b30000; font-size: 1.2em; font-weight: bold; margin-bottom: 1em; display: none; text-align: left;">Not quite, you’re still learning!</div>
         <div id="success-message" style="display: none; color: #228B22; font-size: 1.2em; font-weight: bold; margin-bottom: 1em; text-align: left;"><span style="font-size:1.2em;">&#10003;</span> Awesome!</div>
-        <div style="display: flex; justify-content: flex-end; gap: 1em;">
+        <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; gap: 1em; margin-top: 3em;">
                         <button type="reset" class="rank-reset-btn muted-btn">Reset</button>
-            <button type="submit" class="rank-submit-btn nav-btn" id="submit-continue-btn">Submit</button>
+<button type="submit" class="rank-submit-btn nav-btn" id="submit-continue-btn">Submit</button>
         </div>
     </form>
     {% endif %}
@@ -304,11 +436,12 @@
     opacity: 0;
 }
 .drop-zone .draggable-item {
-    position: absolute;
-    left: 0; right: 0; top: 0; bottom: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
+    width: 180px !important;
+    height: 60px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 1.2em !important;
+    position: static !important;
     z-index: 2;
     display: flex;
     align-items: center;
@@ -395,17 +528,68 @@
     overflow: hidden;
     flex-shrink: 0;
 }
-.drop-zone.active {
-    border-color: #a86e2a;
-    background: #f6e3c6;
+.drop-zone,
+.drop-zone.active,
+.drop-zone:active,
+.drop-zone:focus,
+.drop-zone:hover {
+    background: #faf7f2 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-color: #aaa !important;
+    outline: none !important;
+    transition: none !important;
 }
+
+.drop-zone .draggable-item,
+.drop-zone .draggable-item:active,
+.drop-zone .draggable-item:focus,
+.drop-zone .draggable-item:hover,
+.drop-zone .draggable-item.dragging {
+    width: 180px !important;
+    height: 60px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 1.2em !important;
+    position: static !important;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f6e3c6 !important;
+    color: #222 !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    transition: none !important;
+}
+
 .draggable-item.dragging {
-    opacity: 0.7;
+    //opacity: 0.7;
     box-shadow: 0 4px 14px rgba(139,97,71,0.18);
-    border: 2px solid #a86e2a;
+    //border: 2px solid #a86e2a;
 }
+.custom-submit-btn {
+    background: #e8d1b0 !important;
+    color: #8B6147 !important;
+    border-radius: 18px !important;
+    border: none !important;
+    font-size: 1.15rem !important;
+    font-weight: 500 !important;
+    padding: 0.75rem 2.5rem !important;
+    box-shadow: 0 2px 8px rgba(139, 97, 71, 0.07) !important;
+    cursor: pointer !important;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s !important;
+    outline: none !important;
+}
+.custom-submit-btn:hover, .custom-submit-btn:focus {
+    background: #f6e3c6 !important;
+    color: #8B6147 !important;
+}
+
 </style>
 <script>
+let undoStack = [];
 document.addEventListener('DOMContentLoaded', function() {
     enableDragDrop();
 // --- Drag and Drop Logic ---
@@ -426,15 +610,7 @@ function enableDragDrop() {
     });
     dropzones.forEach(zone => {
         zone.addEventListener('dragover', e => { e.preventDefault(); });
-        zone.addEventListener('dragenter', e => {
-            e.preventDefault();
-            if (!zone.querySelector('.draggable-item')) {
-                zone.classList.add('active');
-            }
-        });
-        zone.addEventListener('dragleave', e => {
-            zone.classList.remove('active');
-        });
+        zone.addEventListener('dragover', e => { e.preventDefault(); });
         zone.addEventListener('drop', e => {
             e.preventDefault();
             zone.classList.remove('active');
@@ -478,21 +654,21 @@ function checkRanking() {
     dropzones.forEach((zone, i) => {
         // Remove previous highlights
         zone.style.border = "2px dashed #aaa";
-        zone.style.background = "";
+        // zone.style.background = ""; // removed to prevent color change
         zone.style.boxShadow = "none";
         zone.style.color = "#888";
         // Check if correct
         const item = zone.querySelector('.draggable-item');
         if (item && item.textContent.trim() === correctRanking[i]) {
             zone.style.border = "2px dashed #218838";
-            zone.style.background = "#f6fff6";
+            // zone.style.background = "#f6fff6"; // removed to prevent color change
             zone.style.boxShadow = "0 0 0 2px #218838";
             zone.style.color = "#218838";
         } else {
             allCorrect = false;
             if (item) {
                 zone.style.border = "2px solid #b30000";
-                zone.style.background = "#fff6f6";
+                // zone.style.background = "#fff6f6"; // removed to prevent color change
                 zone.style.boxShadow = "0 0 0 2px #b30000";
                 zone.style.color = "#b30000";
             }
