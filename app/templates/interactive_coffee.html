@@ -10,128 +10,247 @@
         </div>
     </nav>
 
-  <!-- style block for image, popup & pulse animation -->
-  <style>
-    /* force all SVGs/images to be 500×500 */
-    img,
-    svg {
-      width: 500px;
-      height: 500px;
-      object-fit: cover;
-    }
+    <div class="interactive-container">
+        <div class="progress-section">
+            <div class="progress-dots" id="progress-dots"></div>
+            <div class="progress-text">Click on each ingredient to learn more</div>
+        </div>
 
-    /* container to position popup & button, centered */
-    #coffee-container {
-      position: relative;
-      width: 500px;
-      margin: 0 auto;
-      text-align: center;
-    }
+        <div class="coffee-section">
+            <h3 class="coffee-title" id="coffee-name"></h3>
+            
+            <div id="coffee-container">
+                <div id="coffee-data">Loading...</div>
+                <div id="popup" class="popup"></div>
+            </div>
 
-    .popup {
-      position: fixed;
-      background: #fff;
-      border: none;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      display: none;
-      z-index: 1000;
-      max-width: 300px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #333;
-      transform: translateY(10px);
-      opacity: 0;
-      transition: all 0.3s ease;
-    }
+            <div class="action-buttons">
+                <button id="continue-btn" disabled>Continue</button>
+            </div>
+        </div>
 
-    .popup.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .popup::before {
-      content: '';
-      position: absolute;
-      left: -8px;
-      top: 50%;
-      transform: translateY(-50%);
-      border-style: solid;
-      border-width: 8px 8px 8px 0;
-      border-color: transparent #fff transparent transparent;
-    }
-
-    /* preserve pointer cursor on hotspots */
-    .hotspot {
-      cursor: pointer;
-      transform-origin: center;
-      transform-box: fill-box;
-      transition: opacity 0.3s ease;
-    }
-
-    /* pulse animation */
-    @keyframes pulse {
-      0%   { transform: scale(1); }
-      40%  { transform: scale(0.98); }
-      100% { transform: scale(1.02); }
-    }
-    .pulse-animation {
-      animation: pulse 1.5s infinite ease-in-out alternate;
-      opacity: 0.7;
-    }
-
-    /* Continue button: remove underline, light gray when disabled */
-    #continue-btn {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
-      text-decoration: none !important;
-      border: none;
-      background: none;
-      color: #898f95;
-      cursor: default;
-      transition: all 0.3s ease;
-    }
-    
-    #continue-btn:disabled {
-      cursor: default;
-    }
-
-    /* when we add .enabled, switch to real button styling */
-    #continue-btn.enabled {
-      background-color: #8b6147;
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 0.25rem;
-      cursor: pointer;
-    }
-    
-    .light-gray-text {
-      color: #545454; 
-    }
-  </style>
-
-  <h3 class="text-center mb-4 light-gray-text">
-    Click on each ingredient in the <br> coffee cup to learn more about it
-  </h3>
-
-  <h4 id="coffee-name" class="text-center light-gray-text"></h4>
-
-  <div id="coffee-container">
-    <div id="coffee-data">Loading...</div>
-    <div id="popup" class="popup"></div>
-
-    <!-- starts disabled/light-gray text -->
-    <button
-      id="continue-btn"
-      disabled
-    >
-      Continue
-    </button>
-  </div>
-
-  <!-- external JS -->
-  <script src="{{ url_for('static', filename='js/interactive_coffee.js') }}"></script>
+        <div id="completion-message" class="completion-message" style="display: none;">
+            <h2>Great job! 🎉</h2>
+            <p>You've learned about all the coffee components.</p>
+            <div class="completion-buttons">
+                <button id="restart-btn" class="btn-restart">Restart Lesson</button>
+                <a href="{{ url_for('main.quiz', question_id=1) }}" class="btn-quiz">Take the Quiz</a>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+.interactive-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.progress-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.progress-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #E6D5C3;
+    border: 2px solid #8B6147;
+    transition: all 0.3s ease;
+}
+
+.progress-dot.completed {
+    background-color: #8B6147;
+    border-color: #8B6147;
+}
+
+.progress-text {
+    color: #E6D5C3;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.coffee-section {
+    text-align: center;
+    width: 100%;
+}
+
+.coffee-title {
+    color: #E6D5C3;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-family: 'Playfair Display', serif;
+}
+
+#coffee-container {
+    position: relative;
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+img, svg {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+}
+
+.popup {
+    position: fixed;
+    background: #fff;
+    border: none;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    display: none;
+    z-index: 1000;
+    max-width: 300px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.popup.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.popup::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-width: 8px 8px 8px 0;
+    border-color: transparent #fff transparent transparent;
+}
+
+.hotspot {
+    cursor: pointer;
+    transform-origin: center;
+    transform-box: fill-box;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    40% { transform: scale(0.98); }
+    100% { transform: scale(1.02); }
+}
+
+.pulse-animation {
+    animation: pulse 1.5s infinite ease-in-out alternate;
+    opacity: 0.7;
+}
+
+.action-buttons {
+    margin-top: 2rem;
+}
+
+#continue-btn {
+    background-color: #8B6147;
+    color: #E6D5C3;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.5;
+}
+
+#continue-btn:disabled {
+    cursor: not-allowed;
+}
+
+#continue-btn:not(:disabled) {
+    opacity: 1;
+}
+
+#continue-btn:not(:disabled):hover {
+    background-color: #E6D5C3;
+    color: #8B6147;
+    transform: translateY(-2px);
+}
+
+.completion-message {
+    text-align: center;
+    color: #E6D5C3;
+    margin-top: 2rem;
+}
+
+.completion-message h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.completion-message p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.completion-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn-restart, .btn-quiz {
+    background-color: #E6D5C3;
+    color: #8B6147;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-restart:hover, .btn-quiz:hover {
+    background-color: #8B6147;
+    color: #E6D5C3;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .interactive-container {
+        padding: 1rem;
+    }
+
+    #coffee-container {
+        width: 100%;
+    }
+
+    img, svg {
+        width: 100%;
+        height: auto;
+    }
+
+    .completion-buttons {
+        flex-direction: column;
+    }
+}
+</style>
+
+<script src="{{ url_for('static', filename='js/interactive_coffee.js') }}"></script>
 {% endblock %}
