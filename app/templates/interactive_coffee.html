@@ -29,27 +29,45 @@
     }
 
     .popup {
-      position: fixed; /* offsets map to viewport */
+      position: fixed;
       background: #fff;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border: none;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
       display: none;
       z-index: 1000;
+      max-width: 300px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #333;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .popup.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .popup::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-style: solid;
+      border-width: 8px 8px 8px 0;
+      border-color: transparent #fff transparent transparent;
     }
 
     /* preserve pointer cursor on hotspots */
-    .image-container [fill="#5b4323"],
-    .image-container [fill="#83b4cc"] {
-      cursor: pointer;
-    }
-
-    /* base hotspot transform settings */
     .hotspot {
       cursor: pointer;
       transform-origin: center;
       transform-box: fill-box;
+      transition: opacity 0.3s ease;
     }
 
     /* pulse animation */
@@ -71,9 +89,11 @@
       text-decoration: none !important;
       border: none;
       background: none;
-      color: #898f95; /* bootstrap text-muted */
+      color: #898f95;
       cursor: default;
+      transition: all 0.3s ease;
     }
+    
     #continue-btn:disabled {
       cursor: default;
     }
@@ -86,10 +106,10 @@
       border-radius: 0.25rem;
       cursor: pointer;
     }
+    
     .light-gray-text {
-  color: #545454; 
-}
-
+      color: #545454; 
+    }
   </style>
 
   <h3 class="text-center mb-4 light-gray-text">

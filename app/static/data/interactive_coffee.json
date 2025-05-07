@@ -7,13 +7,13 @@
       {
         "id": "espresso",
         "label": "Espresso",
-        "fillColor": "#5b4323",
+        "fillColor": "url(#gradient-0)",
         "info": "Classic espresso base."
       },
       {
         "id": "hot_water",
         "label": "Hot Water",
-        "fillColor": "#83b4cc",
+        "fillColor": "url(#gradient-1)",
         "info": "Hot water."
       }
     ]
@@ -26,19 +26,19 @@
       {
         "id": "espresso",
         "label": "Espresso",
-        "fillColor": "#594223",
+        "fillColor": "url(#gradient-0)",
         "info": "Strong espresso base for the latte."
       },
       {
         "id": "steamed_milk",
         "label": "Steamed Milk",
-        "fillColor": "#FED8B2",
+        "fillColor": "url(#gradient-1)",
         "info": "Smooth, creamy steamed milk."
       },
       {
         "id": "foam",
         "label": "Foam",
-        "fillColor": "#FEF0D5",
+        "fillColor": "url(#gradient-2)",
         "info": "Thin layer of foam on top."
       }
     ]
@@ -51,20 +51,20 @@
       {
         "id": "espresso",
         "label": "Espresso",
-        "fillColor": "#594223",
+        "fillColor": "url(#gradient-0)",
         "info": "Bold espresso foundation."
       },
       {
         "id": "steamed_milk",
         "label": "Steamed Milk",
-        "fillColor": "#FED8B2",
-        "info": "Milk."
+        "fillColor": "url(#gradient-1)",
+        "info": "Smooth, creamy steamed milk."
       },
       {
         "id": "foam",
         "label": "Thick Foam",
         "fillColor": "#FEF0D5",
-        "info": "Thick foam."
+        "info": "Thick layer of foam on top."
       }
     ]
   },  
@@ -76,7 +76,7 @@
       {
         "id": "espresso",
         "label": "Espresso",
-        "fillColor": "#594223",
+        "fillColor": "url(#gradient-0)",
         "info": "Rich espresso shot."
       },
       {
@@ -95,8 +95,8 @@
       {
         "id": "espresso",
         "label": "Espresso",
-        "fillColor": "#594223",
-        "info": "Espresso shot inside."
+        "fillColor": "url(#gradient-0)",
+        "info": "Rich espresso shot."
       },
       {
         "id": "chocolate",
@@ -117,7 +117,7 @@
         "info": "Milk."
       }
     ]
-  },  
+  },
   {
     "name": "Cortado",
     "description": "Espresso and steamed milk in equal parts",
@@ -126,17 +126,17 @@
       {
         "id": "espresso",
         "label": "Espresso",
-        "fillColor": "#594223",
-        "info": "two shots of espresso."
+        "fillColor": "url(#gradient-0)",
+        "info": "Two shots of espresso."
       },
       {
         "id": "steamed_milk",
         "label": "Steamed Milk",
         "fillColor": "#FED8B2",
-        "info": "Equal part of milk"
+        "info": "Equal parts steamed milk."
       }
     ]
-  },
+  },  
   {
     "name": "Flat White",
     "description": "Double espresso with milk. 1:2 ratio of milk to espresso",
@@ -145,14 +145,14 @@
       {
         "id": "espresso",
         "label": "Espresso",
-        "fillColor": "#594223",
-        "info": "two shots of espresso."
+        "fillColor": "url(#gradient-0)",
+        "info": "Two shots of espresso."
       },
       {
         "id": "steamed_milk",
         "label": "Steamed Milk",
         "fillColor": "#FED8B2",
-        "info": "some milk"
+        "info": "Some steamed milk."
       }
     ]
   },  
@@ -164,9 +164,9 @@
       {
         "id": "espresso",
         "label": "Espresso",
-        "fillColor": "#594223",
-        "info": "two shots of espresso."
+        "fillColor": "url(#gradient-0)",
+        "info": "Two shots of espresso."
       }
     ]
-  }
+  }  
 ]
