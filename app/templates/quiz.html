@@ -1,197 +1,153 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="quiz-container">
-    <nav class="navigation">
-        <div class="logo">Know Your Coffee</div>
-        <div class="nav-links">
-            <a href="{{ url_for('main.home') }}" class="nav-link">HOME</a>
-            <a href="{{ url_for('main.quiz', question_id=1) }}" class="nav-link active">QUIZ</a>
-        </div>
-    </nav>
 
-    <!-- Progress Bar -->
-    <div class="progress-container">
-        <div class="progress-dots">
-            {% for p in progress %}
-            <div class="progress-dot {{ p.status }}"></div>
-            {% endfor %}
-        </div>
-        <div class="progress-text">Question {{ current_question }} of {{ total_questions }}</div>
-    </div>
+    <div class="home-container">
+        <nav class="navigation">
+            <div class="logo"><a href="{{ url_for('main.home') }}" style="color: inherit; text-decoration: none;">Know Your Coffee</a></div>
+            <div class="nav-links">
+                <a href="{{ url_for('main.learn_overview') }}" class="nav-link">LESSONS</a>
+                <a href="{{ url_for('main.quiz', question_id=1) }}" class="nav-link active">QUIZ</a>
+            </div>
+        </nav>
 
-    <div class="quiz-content">
-        <!-- Left Section: Question and Options -->
-        <div class="question-section">
-            <h2 class="question-text">{{ question.question }}</h2>
-            
-            {% if not feedback %}
-            <form method="POST" class="answer-form" onsubmit="return validateForm()">
-                {% if question.type == 'write_in' %}
-                <div class="write-in-container">
-                    <input type="text" name="answer" class="write-in-input" placeholder="Type your answer here...">
-                    <div class="error-message" id="write-in-error"></div>
-                </div>
-                {% else %}
-                <div class="options-grid">
-                    {% for option in question.options %}
-                    <label class="option-card">
-                        <input type="radio" name="answer" value="{{ option }}" class="option-input">
-                        <span class="option-text">{{ option }}</span>
-                    </label>
+        <div class="interactive-container">
+            <!-- Progress Section -->
+            <div class="progress-section">
+                <div class="progress-dots">
+                    {% for p in progress %}
+                    <div class="progress-dot {{ p.status }}"></div>
                     {% endfor %}
-                    <div class="error-message" id="option-error"></div>
                 </div>
-                {% endif %}
-
-                <div class="button-container">
-                    {% if progress[current_question - 1].status != 'skipped' %}
-                    <button type="button" class="btn-skip" onclick="skipQuestion()">Skip Question</button>
-                    {% endif %}
-                    <button type="submit" class="btn-submit">Submit Answer</button>
-                </div>
-            </form>
-            {% else %}
-            <div class="feedback-container {{ feedback.type }}">
-                <p class="feedback-message">{{ feedback.message | safe }}</p>
-                <p class="feedback-description">{{ feedback.description }}</p>
-                {% if feedback.next_url %}
-                <a href="{{ feedback.next_url }}" class="btn-next">Next Question</a>
-                {% endif %}
+                <div class="progress-text">Question {{ current_question }} of {{ total_questions }}</div>
             </div>
-            {% endif %}
-        </div>
 
-        <!-- Right Section: Image and Description -->
-        <div class="right-section">
-            <div class="image-container">
-                <img src="{{ url_for('static', filename='images/' + question.image) }}" alt="Coffee drink" class="drink-image">
-                <div class="image-description">
-                    <p>{{ question.description }}</p>
+            <div class="quiz-section">
+                <!-- Question Section -->
+                <div class="question-content">
+                    <h3 class="question-title">{{ question.question }}</h3>
+                    
+                    {% if not feedback %}
+                    <form method="POST" class="answer-form" onsubmit="return validateForm()">
+                        {% if question.type == 'write_in' %}
+                        <div class="write-in-container">
+                            <input type="text" name="answer" class="write-in-input" placeholder="Type your answer here...">
+                            <div class="error-message" id="write-in-error"></div>
+                        </div>
+                        {% else %}
+                        <div class="options-grid">
+                            {% for option in question.options %}
+                            <label class="option-card">
+                                <input type="radio" name="answer" value="{{ option }}" class="option-input">
+                                <span class="option-text">{{ option }}</span>
+                            </label>
+                            {% endfor %}
+                            <div class="error-message" id="option-error"></div>
+                        </div>
+                        {% endif %}
+
+                        <div class="action-buttons">
+                            {% if progress[current_question - 1].status != 'skipped' %}
+                            <button type="button" class="btn-skip" onclick="skipQuestion()">Skip Question</button>
+                            {% endif %}
+                            <button type="submit" class="btn-submit">Submit Answer</button>
+                        </div>
+                    </form>
+                    {% else %}
+                    <div class="feedback-container {{ feedback.type }}">
+                        <p class="feedback-message">{{ feedback.message | safe }}</p>
+                        <p class="feedback-description">{{ feedback.description }}</p>
+                        {% if feedback.next_url %}
+                        <a href="{{ feedback.next_url }}" class="btn-next">Next Question</a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Image Section -->
+                <div class="image-section">
+                    <div class="image-container">
+                        <img src="{{ url_for('static', filename='images/' + question.image) }}" alt="Coffee drink" class="drink-image">
+                        <div class="image-description">
+                            <p>{{ question.description }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 <style>
-:root {
-    --color-primary: #8B4513;
-    --color-light: #DEB887;
-    --color-accent: #D2B48C;
-    --color-success: #4CAF50;
-    --color-error: #f44336;
-    --color-warning: #FFA726;
-    --color-text: #333;
-    --color-background: #FFF5E6;
-}
-
-.navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-    margin-bottom: 2rem;
-}
-
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--color-primary);
-    font-family: 'Playfair Display', serif;
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--color-text);
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.nav-link:hover {
-    background-color: var(--color-light);
-    color: var(--color-primary);
-}
-
-.nav-link.active {
-    background-color: var(--color-primary);
-    color: white;
-}
-
-.quiz-container {
+.interactive-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
     min-height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
-.progress-container {
-    margin-bottom: 2rem;
+.progress-section {
     text-align: center;
+    margin-bottom: 2rem;
 }
 
 .progress-dots {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .progress-dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background-color: var(--color-light);
-    border: 2px solid var(--color-primary);
+    background-color: #E6D5C3;
+    border: 2px solid #8B6147;
+    transition: all 0.3s ease;
 }
 
 .progress-dot.correct {
-    background-color: var(--color-success);
-    border-color: var(--color-success);
+    background-color: #8B6147;
+    border-color: #8B6147;
 }
 
 .progress-dot.incorrect {
-    background-color: var(--color-error);
-    border-color: var(--color-error);
+    background-color: #D4A373;
+    border-color: #D4A373;
 }
 
 .progress-dot.skipped {
-    background-color: var(--color-warning);
-    border-color: var(--color-warning);
+    background-color: #E6D5C3;
+    border-color: #8B6147;
 }
 
 .progress-text {
-    color: var(--color-text);
+    color: #E6D5C3;
     font-size: 1.1rem;
     font-weight: 500;
 }
 
-.quiz-content {
+.quiz-section {
     display: flex;
-    gap: 2rem;
-    flex: 1;
+    gap: 3rem;
+    width: 100%;
+    max-width: 1000px;
 }
 
-.question-section {
+.question-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
-.question-text {
-    font-size: 1.8rem;
-    color: var(--color-text);
-    margin-bottom: 1rem;
+.question-title {
+    color: #E6D5C3;
+    font-size: 2rem;
+    margin-bottom: 2rem;
     font-family: 'Playfair Display', serif;
 }
 
@@ -208,8 +164,8 @@
 }
 
 .option-card {
-    background: white;
-    border: 2px solid var(--color-primary);
+    background: #8B6147;
+    border: 2px solid #E6D5C3;
     border-radius: 16px;
     padding: 1.5rem;
     cursor: pointer;
@@ -221,214 +177,190 @@
 
 .option-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-color: var(--color-accent);
+    background-color: #E6D5C3;
+    border-color: #8B6147;
+}
+
+.option-card:hover .option-text {
+    color: #8B6147;
 }
 
 .option-input {
     width: 24px;
     height: 24px;
-    accent-color: var(--color-primary);
+    accent-color: #E6D5C3;
 }
 
 .option-text {
     font-size: 1.2rem;
-    color: var(--color-text);
-}
-
-.button-container {
-    display: flex;
-    gap: 1rem;
-    margin-top: auto;
-}
-
-.btn-skip, .btn-submit {
-    padding: 1.2rem 2.5rem;
-    border-radius: 16px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-    flex: 1;
-}
-
-.btn-skip {
-    background-color: var(--color-light);
-    color: var(--color-text);
-}
-
-.btn-submit {
-    background-color: var(--color-primary);
-    color: white;
-}
-
-.btn-skip:hover, .btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.right-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.image-container {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.drink-image {
-    max-width: 300px;
-    max-height: 300px;
-    object-fit: contain;
-    border-radius: 8px;
-}
-
-.image-description {
-    text-align: center;
-    max-width: 400px;
-    color: var(--color-text);
-    font-size: 1rem;
-    line-height: 1.5;
-}
-
-.feedback-container {
-    background: white;
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.feedback-container.correct {
-    border-left: 4px solid var(--color-success);
-}
-
-.feedback-container.incorrect {
-    border-left: 4px solid var(--color-error);
-}
-
-.feedback-container.skip {
-    border-left: 4px solid var(--color-warning);
-}
-
-.feedback-message {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.feedback-description {
-    color: var(--color-text);
-    margin-bottom: 1rem;
-}
-
-.btn-next {
-    display: inline-block;
-    padding: 1rem 2rem;
-    background-color: var(--color-primary);
-    color: white;
-    border-radius: 16px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-next:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: #E6D5C3;
+    transition: color 0.3s ease;
 }
 
 .write-in-container {
-    margin: 2rem 0;
+    width: 100%;
 }
 
 .write-in-input {
     width: 100%;
     padding: 1rem;
-    font-size: 1.2rem;
-    border: 2px solid var(--color-primary);
+    border: 2px solid #E6D5C3;
     border-radius: 16px;
+    background: #8B6147;
+    color: #E6D5C3;
+    font-size: 1.2rem;
     transition: all 0.3s ease;
+}
+
+.write-in-input::placeholder {
+    color: #E6D5C3;
+    opacity: 0.7;
 }
 
 .write-in-input:focus {
     outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+    border-color: #E6D5C3;
+    background: #E6D5C3;
+    color: #8B6147;
 }
 
-@media (max-width: 1024px) {
-    .quiz-content {
-        flex-direction: column;
-    }
-    
-    .drink-image {
-        max-width: 250px;
-        max-height: 250px;
-    }
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+.btn-skip, .btn-submit, .btn-next {
+    background-color: #8B6147;
+    color: #E6D5C3;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-skip:hover, .btn-submit:hover, .btn-next:hover {
+    background-color: #E6D5C3;
+    color: #8B6147;
+    transform: translateY(-2px);
+}
+
+.feedback-container {
+    padding: 2rem;
+    border-radius: 16px;
+    margin-top: 2rem;
+}
+
+.feedback-container.correct {
+    background-color: #8B6147;
+    border: 2px solid #E6D5C3;
+}
+
+.feedback-container.incorrect {
+    background-color: #D4A373;
+    border: 2px solid #E6D5C3;
+}
+
+.feedback-message {
+    color: #E6D5C3;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.feedback-description {
+    color: #E6D5C3;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.image-container {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.drink-image {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.image-description {
+    color: #E6D5C3;
+    font-size: 1.1rem;
+    line-height: 1.5;
 }
 
 .error-message {
-    color: var(--color-error);
-    font-size: 0.9rem;
+    color: #D4A373;
+    font-size: 1rem;
     margin-top: 0.5rem;
-    display: none;
 }
 
-.error-message.show {
-    display: block;
+@media (max-width: 768px) {
+    .interactive-container {
+        padding: 1rem;
+    }
+
+    .quiz-section {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .image-container {
+        max-width: 100%;
+    }
 }
 </style>
 
 <script>
 function validateForm() {
-    const form = document.querySelector('.answer-form');
-    const selectedAnswer = form.querySelector('input[name="answer"]:checked');
-    const writeInAnswer = form.querySelector('.write-in-input');
-    const optionError = document.getElementById('option-error');
+    const writeInInput = document.querySelector('.write-in-input');
+    const radioInputs = document.querySelectorAll('.option-input');
     const writeInError = document.getElementById('write-in-error');
-    
-    // Clear previous errors
-    if (optionError) optionError.classList.remove('show');
-    if (writeInError) writeInError.classList.remove('show');
-    
-    if (writeInAnswer) {
-        if (!writeInAnswer.value.trim()) {
+    const optionError = document.getElementById('option-error');
+
+    if (writeInInput) {
+        if (!writeInInput.value.trim()) {
             writeInError.textContent = 'Please enter your answer';
-            writeInError.classList.add('show');
             return false;
         }
-    } else if (!selectedAnswer) {
-        optionError.textContent = 'Please select an answer';
-        optionError.classList.add('show');
-        return false;
+        writeInError.textContent = '';
+    } else {
+        const selectedOption = Array.from(radioInputs).find(input => input.checked);
+        if (!selectedOption) {
+            optionError.textContent = 'Please select an answer';
+            return false;
+        }
+        optionError.textContent = '';
     }
-    
     return true;
 }
 
 function skipQuestion() {
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = window.location.href;
-    
-    const skipInput = document.createElement('input');
-    skipInput.type = 'hidden';
-    skipInput.name = 'skip';
-    skipInput.value = 'true';
-    
-    form.appendChild(skipInput);
-    document.body.appendChild(form);
-    form.submit();
+    window.location.href = "{{ url_for('main.quiz', question_id=current_question + 1) }}";
 }
 </script>
 {% endblock %}
