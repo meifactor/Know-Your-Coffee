@@ -24,7 +24,8 @@ def learn_lesson(lesson_id):
     # Example: lesson 1 is interactive ranking
     if lesson_id == 1:
         items = ["Brewed Coffee", "Espresso", "Ristretto"]
-        return render_template('learn_lesson.html', items=items, lesson_id=lesson_id)
+        labels = ["1: Strongest", "2", "3: Weakest"]
+        return render_template('learn_lesson.html', items=items, labels=labels, lesson_id=lesson_id)
     if lesson_id == 2:
         items = ["Steamed Milk", "Foamed Milk"]
         return render_template('learn_lesson.html', items=items, lesson_id=lesson_id)

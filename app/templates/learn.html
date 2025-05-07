@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-{% include 'banner.html' %}
-<div class="learn-components-container">
+<div class="home-container">
+    <nav class="navigation">
+        <div class="logo"><a href="{{ url_for('main.home') }}" style="color: inherit; text-decoration: none;">Know Your Coffee</a></div>
+        <div class="nav-links">
+            <a href="{{ url_for('main.learn_overview') }}" class="nav-link active">LESSONS</a>
+            <a href="{{ url_for('main.quiz', question_id=1) }}" class="nav-link">QUIZ</a>
+        </div>
+    </nav>
+    <div class="learn-components-container">
     <div class="button-row">
         {% for lesson in lessons %}
             <button class="learn-btn" onclick="showComponent({{ loop.index0 }})" id="btn-{{ loop.index0 }}">{{ lesson.title }}</button>
@@ -16,7 +23,7 @@
         <span class="close-btn" onclick="closePanel()">X</span>
     </div>
     <div class="text-end mt-4">
-        <a href="{{ url_for('main.learn_lesson', lesson_id=1) }}" class="btn btn-secondary" id="continueBtn">Continue</a>
+        <a href="{{ url_for('main.learn_lesson', lesson_id=1) }}" class="start-button" id="continueBtn">View all components to continue</a>
     </div>
 </div>
 <script>

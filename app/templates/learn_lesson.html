@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-{% include 'banner.html' %}
-<div class="lesson-container" style="text-align: center;">
+<div class="home-container">
+    <nav class="navigation">
+        <div class="logo"><a href="{{ url_for('main.home') }}" style="color: inherit; text-decoration: none;">Know Your Coffee</a></div>
+        <div class="nav-links">
+            <a href="{{ url_for('main.learn_overview') }}" class="nav-link active">LESSONS</a>
+            <a href="{{ url_for('main.quiz', question_id=1) }}" class="nav-link">QUIZ</a>
+        </div>
+    </nav>
+    <div class="lesson-container" style="text-align: center;">
     
     {% if lesson_id == 2 %}
     <h1 style="margin-top: 2em;">Drag the milk types to complete the sentence:</h1>
@@ -123,15 +130,17 @@
             blank.addEventListener('drop', e => {
                 e.preventDefault();
                 blank.classList.remove('active');
-                // Only allow one milk type per blank
-                if (blank.children.length === 0) {
-                    const draggedId = e.dataTransfer.getData('text/plain');
-                    if (draggedId) {
-                        const draggedElem = document.getElementById(draggedId);
-                        if (draggedElem) {
-                            blank.appendChild(draggedElem);
-                            draggedElem.setAttribute('draggable', 'true');
+                const draggedId = e.dataTransfer.getData('text/plain');
+                if (draggedId) {
+                    const draggedElem = document.getElementById(draggedId);
+                    if (draggedElem) {
+                        if (blank.children.length > 0) {
+                            const prevChild = blank.children[0];
+                            milkRow.appendChild(prevChild);
                         }
+                        blank.appendChild(draggedElem);
+                        draggedElem.setAttribute('draggable', 'true');
+                        undoStack.push({ item: draggedElem, from: milkRow, to: blank });
                     }
                 }
             });
@@ -165,6 +174,18 @@
                 submitBtn.textContent = 'Submit';
                 submitBtn.type = 'submit';
                 submitBtn.onclick = null;
+                undoStack = [];
+            });
+        }
+        // Undo button logic
+        const undoBtn = document.getElementById('undo-btn');
+        if (undoBtn) {
+            undoBtn.addEventListener('click', function() {
+                if (undoStack.length === 0) return;
+                const { item, from, to } = undoStack.pop();
+                if (item && from) {
+                    from.appendChild(item);
+                }
             });
         }
         // Submission and feedback logic
@@ -201,89 +222,178 @@
                 resetBtn.style.display = '';
             };
         })
-        // Submission and feedback logic
-        const form = document.getElementById('milk-blank-form');
-        if (form) {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const feedback = document.getElementById('feedback-message');
-                const success = document.getElementById('success-message');
-                const resetBtn = document.querySelector('.rank-reset-btn');
-                const submitBtn = document.querySelector('.rank-submit-btn');
-                if (lesson_id === 2) {
-                    const blank1 = document.getElementById('blank1');
-                    const blank2 = document.getElementById('blank2');
-                    let correct =
-                        blank1.children.length && blank2.children.length &&
-                        blank1.children[0].textContent.trim() === 'Foamed Milk' &&
-                        blank2.children[0].textContent.trim() === 'Steamed Milk';
-                    if (correct) {
-                        if (feedback) feedback.style.display = 'none';
-                        if (success) success.style.display = '';
-                        if (submitBtn) {
-                            submitBtn.textContent = 'Continue';
-                            submitBtn.type = 'button';
-                            submitBtn.onclick = function() {
-                                window.location.href = '/learn/3';
-                            };
-                        }
-                        if (resetBtn) resetBtn.style.display = 'none';
-                    } else {
-                        if (feedback) feedback.style.display = 'block';
-                        if (success) success.style.display = 'none';
-                        if (resetBtn) resetBtn.style.display = '';
-                        if (submitBtn) {
-                            submitBtn.textContent = 'Submit';
-                            submitBtn.type = 'submit';
-                            submitBtn.onclick = null;
-                        }
-                    }
-                }
-            });
-        }
     });
 </script>
     {% else %}
-    <h1 style="margin-top: 2em;">Rank from Strongest to Weakest</h1>
-    <div style="color: #666; margin-bottom: 1em;">
+    <h1 style="margin-top: 2em; color: #fff;">Rank from Strongest to Weakest</h1>
+    <div style="color: var(--main-color); margin-bottom: 1em;">
         Drag each component in the correct order, from strongest (1) to weakest (3)
     </div>
     <form id="rank-form">
-    <div id="draggable-area">
-        <div style="display: flex; justify-content: center; gap: 2em; margin-bottom: 2em;">
-            {% for item in items %}
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <div draggable="true" class="draggable-item" style="background: #e8d1b0; border-radius: 8px; padding: 1em 2em; font-size: 1.3em; font-weight: bold; margin-bottom: 1em; cursor: grab;">
-                    {{ item }}
-                </div>
-                <div class="drop-zone" style="border: 2px dashed #aaa; border-radius: 12px; padding: 2em 2em; min-width: 160px; min-height: 60px; font-size: 1.2em; color: #888;">
-                    {{ loop.index }}{% if loop.index == 1 %}: Strongest{% elif loop.index == 3 %}: Weakest{% endif %}
-                </div>
+        <div id="draggable-area">
+            <!-- Bank row for unplaced draggable items -->
+            <div id="draggable-bank" style="display: flex; justify-content: center; gap: 2em; margin-bottom: 2em;">
+                {% for item in items %}
+                    <div draggable="true" class="draggable-item">{{ item }}</div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <!-- Drop zones row: label inside each box -->
+            <div class="drop-zones-row" style="display: flex; justify-content: center; gap: 2em;">
+                {% for label in labels %}
+    <div class="drop-zone">
+      <span class="drop-label">{{ label }}</span>
+      <div class="drop-zone-content"></div>
+    </div>
+{% endfor %}
+            </div>
         </div>
-    </div>
-    <div id="feedback-message" style="color: #b30000; font-size: 1.2em; font-weight: bold; margin-bottom: 1em; display: none; text-align: left;">Not quite, you’re still learning!</div>
-    <div id="success-message" style="display: none; color: #228B22; font-size: 1.2em; font-weight: bold; margin-bottom: 1em; text-align: left;"><span style="font-size:1.2em;">&#10003;</span> Awesome!</div>
-    <div style="display: flex; justify-content: flex-end; gap: 1em;">
-        <button type="button" class="rank-reset-btn">Reset</button>
-        <button type="submit" class="rank-submit-btn" id="submit-continue-btn">Submit</button>
-    </div>
-</form>
+        <div id="feedback-message" style="color: #b30000; font-size: 1.2em; font-weight: bold; margin-bottom: 1em; display: none; text-align: left;">Not quite, you’re still learning!</div>
+        <div id="success-message" style="display: none; color: #228B22; font-size: 1.2em; font-weight: bold; margin-bottom: 1em; text-align: left;"><span style="font-size:1.2em;">&#10003;</span> Awesome!</div>
+        <div style="display: flex; justify-content: flex-end; gap: 1em;">
+                        <button type="reset" class="rank-reset-btn muted-btn">Reset</button>
+            <button type="submit" class="rank-submit-btn nav-btn" id="submit-continue-btn">Submit</button>
+        </div>
+    </form>
     {% endif %}
 
 </div>
 <style>
+.drop-zone-wrapper {
+    width: 180px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+.drop-zone-label {
+    text-align: center;
+    color: #888;
+    font-size: 1.1em;
+    margin-bottom: 0.3em;
+}
 .drop-zone {
     border: 2px dashed #aaa;
     border-radius: 12px;
-    padding: 2em 2em;
-    min-width: 160px;
-    min-height: 60px;
-    font-size: 1.2em;
-    color: #888;
+    width: 180px;
+    height: 60px;
+    position: relative;
     background: #faf7f2;
+    box-sizing: border-box;
     transition: border-color 0.2s, background 0.2s;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.drop-zone .drop-label {
+    z-index: 1;
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+.drop-zone.filled .drop-label {
+    opacity: 0;
+}
+.drop-zone .draggable-item {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#draggable-bank {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin-bottom: 2em;
+    width: 100%;
+}
+.draggable-item {
+    width: 180px;
+    height: 60px;
+    border-radius: 12px;
+    background: #e8d1b0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    cursor: grab;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 0;
+    overflow: hidden;
+    /* Remove position: absolute, inset, z-index */
+    position: static;
+}
+
+.nav-btn {
+    background: #f3e1c8;
+    color: #6a4321;
+    border: none;
+    border-radius: 18px;
+    padding: 0.6em 2em;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: none;
+    outline: none;
+}
+.nav-btn:hover, .nav-btn:focus {
+    background: #e8d1b0;
+    color: #4e2e0e;
+}
+
+.muted-btn {
+    background: transparent;
+    color: #f3e1c8;
+    border: none;
+    border-radius: 18px;
+    padding: 0.6em 2em;
+    font-size: 1.1em;
+    font-weight: normal;
+    cursor: pointer;
+    transition: color 0.2s;
+    box-shadow: none;
+    outline: none;
+    opacity: 1;
+}
+.muted-btn:hover, .muted-btn:focus {
+    background: transparent;
+    color: #e8d1b0;
+}
+
+.draggable-item {
+    width: 180px;
+    height: 60px;
+    border-radius: 12px;
+    background: #e8d1b0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    cursor: grab;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 0;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 .drop-zone.active {
     border-color: #a86e2a;
@@ -296,16 +406,17 @@
 }
 </style>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    enableDragDrop();
 // --- Drag and Drop Logic ---
 function enableDragDrop() {
     const draggables = document.querySelectorAll('.draggable-item');
     const dropzones = document.querySelectorAll('.drop-zone');
+    const bank = document.getElementById('draggable-bank');
     let dragged = null;
-    let lastParent = null;
     draggables.forEach(item => {
         item.addEventListener('dragstart', (e) => {
             dragged = item;
-            lastParent = item.parentElement;
             setTimeout(() => item.classList.add('dragging'), 0);
         });
         item.addEventListener('dragend', (e) => {
@@ -330,47 +441,26 @@ function enableDragDrop() {
             // Only allow drop if zone is empty
             if (!zone.querySelector('.draggable-item')) {
                 zone.appendChild(dragged);
+                zone.classList.add('filled');
             } else {
                 // Snap back to last parent if invalid
-                if (lastParent && !lastParent.querySelector('.draggable-item')) {
-                    lastParent.appendChild(dragged);
+                if (bank && !bank.querySelector('.draggable-item')) {
+                    bank.appendChild(dragged);
                 }
             }
+            // Remove 'filled' class if the zone is emptied
+            dropzones.forEach(z => {
+                if (!z.querySelector('.draggable-item')) {
+                    z.classList.remove('filled');
+                }
+            });
         });
     });
 }
 
-enableDragDrop();
-
 // Save the initial HTML of the entire draggable area
 const draggableArea = document.getElementById('draggable-area');
 const initialDraggableAreaHTML = draggableArea ? draggableArea.innerHTML : '';
-
-// --- Reset Button Logic for Ranking Activity ---
-const rankResetBtn = document.querySelector('.rank-reset-btn');
-if (draggableArea && rankResetBtn) {
-    rankResetBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Restore the draggable area to its initial state
-        draggableArea.innerHTML = initialDraggableAreaHTML;
-        // Re-enable drag and drop
-        enableDragDrop();
-        // Hide feedback and success messages
-        const feedback = document.getElementById('feedback-message');
-        const success = document.getElementById('success-message');
-        if (feedback) feedback.style.display = 'none';
-        if (success) success.style.display = 'none';
-        // Reset submit/continue button
-        const submitBtn = document.querySelector('.rank-submit-btn');
-        if (submitBtn) {
-            submitBtn.textContent = 'Submit';
-            submitBtn.type = 'submit';
-            submitBtn.onclick = null;
-            submitBtn.style.display = '';
-        }
-        rankResetBtn.style.display = '';
-    });
-}
 
 // --- Feedback Logic ---
 const correctOrder = {{ items|tojson }};
@@ -443,46 +533,34 @@ if (rankForm) {
         submitBtn.style.display = '';
         submitBtn.textContent = 'Continue';
         submitBtn.type = 'button';
-        submitBtn.onclick = function() {
-            window.location.href = '/learn/2';
-        };
-        {% if lesson_id == 1 %}
-        submitBtn.onclick = function() {
-            window.location.href = '/learn/2';
-        };
-        {% elif lesson_id == 2 %}
-        submitBtn.onclick = function() {
-            window.location.href = '/learn/3';
-        };
-        {% endif %}
+        // Go to next lesson based on current lesson_id
+        var nextLessonId = {{ (2 if lesson_id == 1 else 3 if lesson_id == 2 else None) | tojson }};
+        if (nextLessonId) {
+            submitBtn.onclick = function() { window.location.href = `/learn/${nextLessonId}`; };
+        } else {
+            submitBtn.onclick = null;
+        }
     }
 });
 
-    document.getElementById('rank-form').addEventListener('reset', function(e) {
-    setTimeout(() => {
-        draggableArea.innerHTML = initialDraggableAreaHTML;
-        enableDragDrop();
-        document.getElementById('feedback-message').style.display = 'none';
-        document.getElementById('success-message').style.display = 'none';
-        const continueBtn = document.getElementById('continueBtn');
-        const resetBtn = document.querySelector('.rank-reset-btn');
-        const submitBtn = document.querySelector('.rank-submit-btn');
-        if (continueBtn) continueBtn.style.display = 'none';
-        if (resetBtn) resetBtn.style.display = '';
-        if (submitBtn) submitBtn.style.display = '';
-        document.querySelectorAll('.drop-zone').forEach(zone => {
-            zone.style.border = '2px dashed #aaa';
-        });
-    }, 0); // Wait for form reset
-});
-
-document.getElementById('rank-form').addEventListener('reset', function(e) {
-    setTimeout(() => {
-        draggableArea.innerHTML = initialDraggableAreaHTML;
-        enableDragDrop();
-        document.getElementById('feedback-message').style.display = 'none';
-    }, 0); // Wait for form reset
+    rankForm.addEventListener('reset', function(e) {
+        setTimeout(() => {
+            draggableArea.innerHTML = initialDraggableAreaHTML;
+            enableDragDrop();
+            document.getElementById('feedback-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+            const continueBtn = document.getElementById('continueBtn');
+            const resetBtn = document.querySelector('.rank-reset-btn');
+            const submitBtn = document.querySelector('.rank-submit-btn');
+            if (continueBtn) continueBtn.style.display = 'none';
+            if (resetBtn) resetBtn.style.display = '';
+            if (submitBtn) submitBtn.style.display = '';
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.style.border = '2px dashed #aaa';
+            });
+        }, 0); // Wait for form reset
 });
 }
+});
 </script>
 {% endblock %}
