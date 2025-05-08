@@ -26,9 +26,19 @@
                 is used for a smooth, creamy base.
             </span>
         </div>
-        <div id="feedback-row" style="min-height: 2.5em; margin-bottom: 0.5em;">
-            <div id="feedback-message" style="color: #b30000; font-size: 1.2em; font-weight: bold; display: none; text-align: left; margin-bottom: 0.5em;">Not quite, you’re still learning!</div>
-            <div id="success-message" style="display: none; color: #228B22; font-size: 1.2em; font-weight: bold; text-align: left; margin-bottom: 0.5em;"><span style="font-size:1.2em;">&#10003;</span> Awesome!</div>
+        <div id="feedback-row" style="min-height: 2.5em; margin: 2em 0; padding: 0 1em;">
+            <div id="feedback-message" style="display: none; text-align: left; margin-bottom: 0.5em; background-color: #fff5e6; padding: 15px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(139, 97, 71, 0.1); border-left: 4px solid #b30000;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #b30000; font-size: 1.4em;">&#9888;</span>
+                    <span style="color: #8B6147; font-size: 1.2em; font-weight: 500;">Not quite, you're still learning!</span>
+                </div>
+            </div>
+            <div id="success-message" style="display: none; text-align: left; margin-bottom: 0.5em; background-color: #fff5e6; padding: 15px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(139, 97, 71, 0.1); border-left: 4px solid #2E7D32;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #2E7D32; font-size: 1.4em;">&#10003;</span>
+                    <span style="color: #8B6147; font-size: 1.2em; font-weight: 500;">Awesome! You got it right!</span>
+                </div>
+            </div>
         </div>
 
         <div class="navigation-buttons" style="display: flex; justify-content: flex-end; gap: 1em;">
@@ -379,8 +389,18 @@
 {% endfor %}
             </div>
         </div>
-        <div id="feedback-message" style="color: #b30000; font-size: 1.2em; font-weight: bold; margin-bottom: 1em; display: none; text-align: left;">Not quite, you’re still learning!</div>
-        <div id="success-message" style="display: none; color: #228B22; font-size: 1.2em; font-weight: bold; margin-bottom: 1em; text-align: left;"><span style="font-size:1.2em;">&#10003;</span> Awesome!</div>
+        <div id="feedback-message" style="display: none; text-align: left; margin: 2em 0; padding: 0 1em; background-color: #fff5e6; padding: 15px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(139, 97, 71, 0.1); border-left: 4px solid #b30000;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="color: #b30000; font-size: 1.4em;">&#9888;</span>
+                <span style="color: #8B6147; font-size: 1.2em; font-weight: 500;">Not quite, you're still learning!</span>
+            </div>
+        </div>
+        <div id="success-message" style="display: none; text-align: left; margin: 2em 0; padding: 0 1em; background-color: #fff5e6; padding: 15px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(139, 97, 71, 0.1); border-left: 4px solid #2E7D32;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="color: #2E7D32; font-size: 1.4em;">&#10003;</span>
+                <span style="color: #8B6147; font-size: 1.2em; font-weight: 500;">Awesome! You got it right!</span>
+            </div>
+        </div>
         <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center; gap: 1em; margin-top: 3em;">
                         <button type="reset" class="rank-reset-btn muted-btn">Reset</button>
 <button type="submit" class="rank-submit-btn nav-btn" id="submit-continue-btn">Submit</button>
