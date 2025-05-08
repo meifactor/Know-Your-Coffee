@@ -3,9 +3,9 @@
 {% block content %}
 <div class="quiz-container">
     <nav class="navigation">
-        <div class="logo">Know Your Coffee</div>
+        <div class="logo"><a href="{{ url_for('main.home') }}" style="color: inherit; text-decoration: none;">Know Your Coffee</a></div>
         <div class="nav-links">
-            <a href="{{ url_for('main.home') }}" class="nav-link">HOME</a>
+            <a href="{{ url_for('main.learn_overview') }}" class="nav-link">LESSONS</a>
             <a href="{{ url_for('main.quiz', question_id=1) }}" class="nav-link active">QUIZ</a>
         </div>
     </nav>
@@ -56,7 +56,13 @@
                 <p class="feedback-message">{{ feedback.message | safe }}</p>
                 <p class="feedback-description">{{ feedback.description }}</p>
                 {% if feedback.next_url %}
-                <a href="{{ feedback.next_url }}" class="btn-next">Next Question</a>
+                    {% if current_question == total_questions %}
+                        <div class="button-container">
+                            <a href="{{ url_for('main.quiz_results') }}" class="btn-next">See Quiz Results</a>
+                        </div>
+                    {% else %}
+                        <a href="{{ feedback.next_url }}" class="btn-next">Next Question</a>
+                    {% endif %}
                 {% endif %}
             </div>
             {% endif %}
@@ -90,15 +96,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0;
-    margin-bottom: 2rem;
+    padding: 2rem 4rem;
+    background-color: var(--main-color);
+    margin: -2rem -2rem 2rem -2rem;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
 }
 
 .logo {
+    color: #E6D5C3;
     font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--color-primary);
-    font-family: 'Playfair Display', serif;
+    font-weight: 500;
 }
 
 .nav-links {
@@ -108,21 +120,20 @@
 
 .nav-link {
     text-decoration: none;
-    color: var(--color-text);
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    color: #E6D5C3;
+    padding: 0.5rem 2rem;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
 }
 
 .nav-link:hover {
-    background-color: var(--color-light);
-    color: var(--color-primary);
+    background-color: #E6D5C3;
+    color: var(--main-color);
 }
 
 .nav-link.active {
-    background-color: var(--color-primary);
-    color: white;
+    background-color: #E6D5C3;
+    color: var(--main-color);
 }
 
 .quiz-container {
@@ -304,8 +315,9 @@
 .feedback-container {
     background: white;
     border-radius: 16px;
-    padding: 1.5rem;
+    padding: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
 }
 
 .feedback-container.correct {
@@ -333,18 +345,21 @@
 
 .btn-next {
     display: inline-block;
-    padding: 1rem 2rem;
-    background-color: var(--color-primary);
-    color: white;
-    border-radius: 16px;
+    padding: 1rem 2.5rem;
+    background-color: var(--main-color);
+    color: #E6D5C3;
+    border-radius: 25px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 1.1rem;
     transition: all 0.3s ease;
+    text-align: center;
 }
 
 .btn-next:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: #6b3e0b;
 }
 
 .write-in-container {
