@@ -165,10 +165,15 @@ def quiz(question_id):
                     # Get the first skipped question
                     next_id = session['skipped_questions'][0]
                 else:
-                    # All questions are answered or skipped, go to results
-                    return redirect(url_for('main.results'))
+                    # All questions are answered or skipped, show completion screen
+                    next_id = None
             
-            feedback['next_url'] = url_for('main.quiz', question_id=next_id)
+            # Set the next URL based on whether there are more questions or if we're done
+            if next_id:
+                feedback['next_url'] = url_for('main.quiz', question_id=next_id)
+            else:
+                feedback['next_url'] = url_for('main.results')
+            
             session.modified = True
             return render_template('quiz.html',
                                 question=questions[question_id-1],

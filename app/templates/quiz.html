@@ -58,6 +58,27 @@
                 <p class="feedback-description">{{ feedback.description }}</p>
                 {% if feedback.next_url %}
                 <a href="{{ feedback.next_url }}" class="btn-next">Next Question</a>
+                    {% if current_question == total_questions %}
+                        {% if session.get('skipped_questions') %}
+                            <div class="completion-screen">
+                                <h2>You have skipped questions!</h2>
+                                <p>Let's go back and answer the questions you skipped.</p>
+                                <div class="completion-buttons">
+                                    <a href="{{ feedback.next_url }}" class="btn-next">Answer Skipped Questions</a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="completion-screen">
+                                <h2>Quiz Complete!</h2>
+                                <p>You've answered all questions. Would you like to see your results?</p>
+                                <div class="completion-buttons">
+                                    <a href="{{ url_for('main.results') }}" class="btn-next">See Quiz Results</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ feedback.next_url }}" class="btn-next">Next Question</a>
+                    {% endif %}
                 {% endif %}
             </div>
             {% endif %}
@@ -378,15 +399,78 @@
         max-width: 100%;
     }
 }
+
+.completion-screen {
+    background-color: #E6D5C3;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.completion-screen h2 {
+    color: var(--main-color);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.completion-screen p {
+    color: var(--main-color);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.completion-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn-next {
+    background-color: var(--main-color);
+    color: #E6D5C3;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
 </style>
 
 <script>
 function validateForm() {
+<<<<<<< HEAD
     const writeInInput = document.querySelector('.write-in-input');
     const radioInputs = document.querySelectorAll('.option-input');
     const writeInError = document.getElementById('write-in-error');
     const optionError = document.getElementById('option-error');
 
+=======
+    const form = document.querySelector('.answer-form');
+    const selectedAnswer = form.querySelector('input[name="answer"]:checked');
+    const writeInInput = form.querySelector('.write-in-input');
+    const optionError = document.getElementById('option-error');
+    const writeInError = document.getElementById('write-in-error');
+    
+>>>>>>> c333916 (added transition states for skipped questions and added quiz results banner)
     if (writeInInput) {
         if (!writeInInput.value.trim()) {
             writeInError.textContent = 'Please enter your answer';
@@ -401,11 +485,23 @@ function validateForm() {
         }
         optionError.textContent = '';
     }
+    } else if (!selectedAnswer) {
+        optionError.textContent = 'Please select an answer';
+        return false;
+    }
+    optionError.textContent = '';
     return true;
 }
 
 function skipQuestion() {
     window.location.href = "{{ url_for('main.quiz', question_id=current_question + 1) }}";
+    const form = document.querySelector('.answer-form');
+    const skipInput = document.createElement('input');
+    skipInput.type = 'hidden';
+    skipInput.name = 'skip';
+    skipInput.value = 'true';
+    form.appendChild(skipInput);
+    form.submit();
 }
 </script>
 {% endblock %}

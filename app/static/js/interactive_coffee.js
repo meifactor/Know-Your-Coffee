@@ -43,6 +43,9 @@ $(document).ready(function () {
     $('.coffee-section').fadeIn();
     renderCoffee(0);
   });
+  const $back = $("#back-btn");
+  const $completionScreen = $("#completion-screen");
+  const $restartDrinks = $("#restart-drinks");
 
   // helper for popup
   function showPopup(el, info) {
@@ -97,14 +100,42 @@ $(document).ready(function () {
     setTimeout(() => $popup.hide(), 300);
   }
 
+  function showCompletionScreen() {
+    $completionScreen.fadeIn(300);
+  }
+
+  function hideCompletionScreen() {
+    $completionScreen.fadeOut(300);
+  }
+
+  function updateNavigationButtons() {
+    // Enable/disable back button
+    $back.prop("disabled", currentIndex === 0);
+    
+    // Update back button styling
+    if (currentIndex === 0) {
+      $back.removeClass("enabled");
+    } else {
+      $back.addClass("enabled");
+    }
+  }
+
   function renderCoffee(index) {
     currentIndex = index;
     const coffee = coffeeData[index];
     const hotspots = coffee.hotspots || [];
     $("#coffee-name").text(coffee.name);
+    $("#drink-name").text(coffee.name.toLowerCase());
 
     // Reset Continue button
     $continue.prop("disabled", true);
+    // reset Continue button
+    $continue
+      .prop("disabled", true)
+      .removeClass("enabled");
+
+    // Update navigation buttons
+    updateNavigationButtons();
 
     // Clear existing content but keep the container structure
     $coffeeData.empty();
@@ -181,6 +212,24 @@ $(document).ready(function () {
       renderCoffee(currentIndex + 1);
     }
     updateProgressDots();
+      showCompletionScreen();
+    } else {
+      renderCoffee(currentIndex + 1);
+    }
+  });
+
+  // go back to previous drink
+  $back.on("click", () => {
+    if (currentIndex > 0) {
+      $popup.hide();
+      renderCoffee(currentIndex - 1);
+    }
+  });
+
+  // restart drinks
+  $restartDrinks.on("click", () => {
+    hideCompletionScreen();
+    renderCoffee(0);
   });
 
   // Hide popup on outside click
