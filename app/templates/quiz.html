@@ -57,27 +57,33 @@
                 <p class="feedback-message">{{ feedback.message | safe }}</p>
                 <p class="feedback-description">{{ feedback.description }}</p>
                 {% if feedback.next_url %}
+<<<<<<< HEAD
                 <a href="{{ feedback.next_url }}" class="btn-next">Next Question</a>
                     {% if current_question == total_questions %}
                         {% if session.get('skipped_questions') %}
                             <div class="completion-screen">
                                 <h2>You have skipped questions!</h2>
                                 <p>Let's go back and answer the questions you skipped.</p>
+=======
+                    {% if feedback.is_complete %}
+                        <div class="completion-screen">
+                            <h2>Quiz Complete!</h2>
+                            {% if session.get('skipped_questions') %}
+                                <p>You have some skipped questions. Would you like to answer them now?</p>
+>>>>>>> 4b98d6d (altered quiz page for quiz results transition state)
                                 <div class="completion-buttons">
                                     <a href="{{ feedback.next_url }}" class="btn-next">Answer Skipped Questions</a>
+                                    <a href="{{ url_for('main.results') }}" class="btn-next">View Results</a>
                                 </div>
-                            </div>
-                        {% else %}
-                            <div class="completion-screen">
-                                <h2>Quiz Complete!</h2>
-                                <p>You've answered all questions. Would you like to see your results?</p>
+                            {% else %}
+                                <p>You've answered all questions. Ready to see your results?</p>
                                 <div class="completion-buttons">
-                                    <a href="{{ url_for('main.results') }}" class="btn-next">See Quiz Results</a>
+                                    <a href="{{ feedback.next_url }}" class="btn-next">View Results</a>
                                 </div>
-                            </div>
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     {% else %}
-                        <a href="{{ feedback.next_url }}" class="btn-next">Next Question</a>
+                        <a href="{{ feedback.next_url }}" class="btn-next">Continue</a>
                     {% endif %}
                 {% endif %}
             </div>
@@ -401,13 +407,14 @@
 }
 
 .completion-screen {
-    background-color: #E6D5C3;
+    background-color: #FFF5E6;
     padding: 2rem;
     border-radius: 20px;
     text-align: center;
     margin-top: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.5s ease-in-out;
+    border: 2px solid #8B4513;
 }
 
 @keyframes fadeIn {
@@ -422,13 +429,13 @@
 }
 
 .completion-screen h2 {
-    color: var(--main-color);
+    color: #8B4513;
     font-size: 2rem;
     margin-bottom: 1rem;
 }
 
 .completion-screen p {
-    color: var(--main-color);
+    color: #8B4513;
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
 }
@@ -440,8 +447,8 @@
 }
 
 .btn-next {
-    background-color: var(--main-color);
-    color: #E6D5C3;
+    background-color: #8B4513;
+    color: #FFF5E6;
     padding: 1rem 2rem;
     border-radius: 25px;
     text-decoration: none;
@@ -452,25 +459,18 @@
 .btn-next:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: #6B3413;
 }
 </style>
 
 <script>
 function validateForm() {
-<<<<<<< HEAD
-    const writeInInput = document.querySelector('.write-in-input');
-    const radioInputs = document.querySelectorAll('.option-input');
-    const writeInError = document.getElementById('write-in-error');
-    const optionError = document.getElementById('option-error');
-
-=======
     const form = document.querySelector('.answer-form');
     const selectedAnswer = form.querySelector('input[name="answer"]:checked');
     const writeInInput = form.querySelector('.write-in-input');
     const optionError = document.getElementById('option-error');
     const writeInError = document.getElementById('write-in-error');
     
->>>>>>> c333916 (added transition states for skipped questions and added quiz results banner)
     if (writeInInput) {
         if (!writeInInput.value.trim()) {
             writeInError.textContent = 'Please enter your answer';
