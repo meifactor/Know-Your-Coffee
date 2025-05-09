@@ -2,8 +2,11 @@
 
 {% block content %}
 <div class="results-container">
-    <h1 class="results-title">Quiz Results</h1>
-    
+    <div class="completion-popup">
+        <h2>Congratulations!</h2>
+        <p>You've completed the quiz. Here are your results:</p>
+    </div>
+
     <div class="score-summary">
         <div class="score-box">
             <span class="score">{{ score }}/{{ total }}</span>
@@ -62,6 +65,31 @@
     padding: 0 20px;
 }
 
+.completion-popup {
+    background-color: #FFF5E6;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.completion-popup h2 {
+    color: #8B4513;
+    margin-bottom: 1rem;
+    font-size: 1.8em;
+}
+
+.completion-popup p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .results-title {
     text-align: center;
     color: var(--primary-brown);
@@ -71,13 +99,14 @@
 
 .score-summary {
     background: white;
-    border-radius: 10px;
+    border-radius: 16px;
     padding: 30px;
     margin-bottom: 40px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: 2px solid #FFF5E6;
 }
 
 .score-box {
@@ -86,7 +115,7 @@
 
 .score {
     font-size: 3em;
-    color: var(--primary-brown);
+    color: #8B4513;
     font-weight: bold;
     display: block;
 }
@@ -123,29 +152,35 @@
 }
 
 .answers-review h2 {
-    color: var(--primary-brown);
+    color: #8B4513;
     margin-bottom: 20px;
+    font-size: 1.8em;
 }
 
 .answer-card {
     background: white;
-    border-radius: 10px;
+    border-radius: 16px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border-left: 4px solid #ddd;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 2px solid #FFF5E6;
+    transition: transform 0.3s ease;
+}
+
+.answer-card:hover {
+    transform: translateY(-2px);
 }
 
 .answer-card.correct {
-    border-left-color: #2E7D32;
+    border-left: 4px solid #2E7D32;
 }
 
 .answer-card.incorrect {
-    border-left-color: #C62828;
+    border-left: 4px solid #C62828;
 }
 
 .answer-card.skipped {
-    border-left-color: #F57C00;
+    border-left: 4px solid #F57C00;
 }
 
 .question-section {
@@ -153,7 +188,7 @@
 }
 
 .question-section h3 {
-    color: var(--primary-brown);
+    color: #8B4513;
     margin-bottom: 5px;
 }
 
@@ -170,6 +205,7 @@
 .status {
     font-weight: bold;
     margin-bottom: 10px;
+    font-size: 1.1em;
 }
 
 .status.correct {
@@ -249,11 +285,12 @@
     
     .results-actions {
         flex-direction: column;
-        gap: 15px;
+        align-items: center;
     }
     
     .btn-restart, .btn-home {
         width: 100%;
+        max-width: 300px;
     }
 }
 </style>

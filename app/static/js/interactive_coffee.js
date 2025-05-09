@@ -3,8 +3,11 @@ $(document).ready(function () {
   let coffeeData = [];
   let currentIndex = 0;
   const $coffeeData = $("#coffee-data");
-  const $popup      = $("#popup");
-  const $continue   = $("#continue-btn");
+  const $popup = $("#popup");
+  const $continue = $("#continue-btn");
+  const $back = $("#back-btn");
+  const $completionScreen = $("#completion-screen");
+  const $restartDrinks = $("#restart-drinks");
 
   // helper for popup
   function showPopup(el, info) {
@@ -51,17 +54,40 @@ $(document).ready(function () {
     setTimeout(() => $popup.hide(), 300); // Wait for fade out animation
   }
 
+  function showCompletionScreen() {
+    $completionScreen.fadeIn(300);
+  }
+
+  function hideCompletionScreen() {
+    $completionScreen.fadeOut(300);
+  }
+
+  function updateNavigationButtons() {
+    // Enable/disable back button
+    $back.prop("disabled", currentIndex === 0);
+    
+    // Update back button styling
+    if (currentIndex === 0) {
+      $back.removeClass("enabled");
+    } else {
+      $back.addClass("enabled");
+    }
+  }
+
   function renderCoffee(index) {
     currentIndex = index;
-    const coffee   = coffeeData[index];
+    const coffee = coffeeData[index];
     const hotspots = coffee.hotspots || [];
     $("#coffee-name").text(coffee.name);
+    $("#drink-name").text(coffee.name.toLowerCase());
 
     // reset Continue button
     $continue
       .prop("disabled", true)
-      .removeClass("enabled")
-      .css({});
+      .removeClass("enabled");
+
+    // Update navigation buttons
+    updateNavigationButtons();
 
     $coffeeData.html(`<div class="image-container"></div>`);
     const $container = $coffeeData.find(".image-container");
@@ -141,7 +167,26 @@ $(document).ready(function () {
   $continue.on("click", () => {
     if ($continue.prop("disabled") || !coffeeData.length) return;
     $popup.hide();
-    renderCoffee((currentIndex + 1) % coffeeData.length);
+    
+    if (currentIndex === coffeeData.length - 1) {
+      showCompletionScreen();
+    } else {
+      renderCoffee(currentIndex + 1);
+    }
+  });
+
+  // go back to previous drink
+  $back.on("click", () => {
+    if (currentIndex > 0) {
+      $popup.hide();
+      renderCoffee(currentIndex - 1);
+    }
+  });
+
+  // restart drinks
+  $restartDrinks.on("click", () => {
+    hideCompletionScreen();
+    renderCoffee(0);
   });
 
   // hide popup on outside click
