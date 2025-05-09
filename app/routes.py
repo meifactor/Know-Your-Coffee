@@ -173,6 +173,7 @@ def quiz(question_id):
                 feedback['next_url'] = url_for('main.quiz', question_id=next_id)
             else:
                 feedback['next_url'] = url_for('main.results')
+                feedback['is_complete'] = True
             
             session.modified = True
             return render_template('quiz.html',
@@ -218,11 +219,11 @@ def get_progress():
     progress = []
     
     for i in range(1, len(questions) + 1):
-        if session.get(f'q{i}_correct') is True:
-            status = 'correct'
-        elif i in session.get('skipped_questions', []):
+        if i in session.get('skipped_questions', []):
             status = 'skipped'
-        elif session.get(f'q{i}_answer'):
+        elif session.get(f'q{i}_correct') is True:
+            status = 'correct'
+        elif session.get(f'q{i}_correct') is False:
             status = 'incorrect'
         else:
             status = 'unanswered'
