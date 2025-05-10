@@ -2,269 +2,34 @@
 
 {% block content %}
 <div class="home-container">
-    <nav class="navigation">
-        <div class="logo"><a href="{{ url_for('main.home') }}" style="color: inherit; text-decoration: none;">Know Your Coffee</a></div>
-        <div class="nav-links">
-            <a href="{{ url_for('main.learn_overview') }}" class="nav-link active">LESSONS</a>
-            <a href="{{ url_for('main.quiz', question_id=1) }}" class="nav-link">QUIZ</a>
-        </div>
-    </nav>
-
-    <div class="interactive-container">
-        <div class="progress-section">
-            <div class="progress-dots" id="progress-dots"></div>
-            <div class="progress-text">Click on each ingredient to learn more</div>
-        </div>
-
-        <div class="coffee-section">
-            <h3 class="coffee-title" id="coffee-name"></h3>
-            
-            <div id="coffee-container">
-                <div id="coffee-data">Loading...</div>
-                <div id="popup" class="popup"></div>
-            </div>
-  <!-- style block for image, popup & pulse animation -->
-  <style>
-    /* force all SVGs/images to be 500×500 */
-    img,
-    svg {
-      width: 500px;
-      height: 500px;
-      object-fit: cover;
-      display: block;
-      margin: 0 auto;
-    }
-
-    /* container to position popup & button, centered */
-    #coffee-container {
-      position: relative;
-      width: 500px;
-      margin: 0 auto;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    #coffee-data {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .image-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-    }
-
-    .instruction-text {
-      color: #E6D5C3;
-      text-align: center;
-      margin: 2rem 0;
-      font-size: 1.3rem;
-      line-height: 1.6;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .coffee-name {
-      color: #E6D5C3;
-      text-align: center;
-      margin: 1rem 0 2rem;
-      font-size: 1.8rem;
-      font-weight: 500;
-    }
-
-    .button-container {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      display: flex;
-      gap: 1rem;
-      z-index: 100;
-    }
-
-    .nav-button {
-      padding: 0.8rem 1.5rem;
-      border-radius: 25px;
-      font-size: 1.1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    #back-btn {
-      background-color: transparent;
-      color: #E6D5C3;
-      border: 2px solid #E6D5C3;
-    }
-
-    #back-btn:hover {
-      background-color: #E6D5C3;
-      color: var(--main-color);
-    }
-
-    #continue-btn {
-      background-color: #E6D5C3;
-      color: var(--main-color);
-      border: none;
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    #continue-btn.enabled {
-      opacity: 1;
-      cursor: pointer;
-    }
-
-    #continue-btn.enabled:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .completion-screen {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #E6D5C3;
-      padding: 3rem;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-    }
-
-    .completion-screen h2 {
-      color: var(--main-color);
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .completion-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-
-    .completion-button {
-      padding: 1rem 2rem;
-      border-radius: 25px;
-      font-size: 1.1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .btn-quiz {
-      background-color: var(--main-color);
-      color: #E6D5C3;
-    }
-
-    .btn-quiz:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-components {
-      background-color: transparent;
-      color: var(--main-color);
-      border: 2px solid var(--main-color);
-    }
-
-    .btn-components:hover {
-      background-color: var(--main-color);
-      color: #E6D5C3;
-    }
-
-    .btn-more-drinks {
-      background-color: #E6D5C3;
-      color: var(--main-color);
-      border: 2px solid var(--main-color);
-    }
-
-    .btn-more-drinks:hover {
-      background-color: var(--main-color);
-      color: #E6D5C3;
-    }
-
-            <div class="action-buttons">
-                <button id="continue-btn" disabled>Continue</button>
-            </div>
-        </div>
-
-        <div id="completion-message" class="completion-message" style="display: none;">
-            <h2>Great job!</h2>
-            <p>You've learned about all the coffee components.</p>
-            <div class="completion-buttons">
-                <button id="restart-btn" class="btn-restart">Restart Lesson</button>
-                <a href="{{ url_for('main.quiz', question_id=1) }}" class="btn-quiz">Take the Quiz</a>
-            </div>
-        </div>
+  <nav class="navigation">
+    <div class="logo">
+      <a href="{{ url_for('main.home') }}" style="color: inherit; text-decoration: none;">Know Your Coffee</a>
     </div>
-    .popup.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
+    <div class="nav-links">
+      <a href="{{ url_for('main.learn_overview') }}" class="nav-link active">LESSONS</a>
+      <a href="{{ url_for('main.quiz', question_id=1) }}" class="nav-link">QUIZ</a>
+    </div>
+  </nav>
 
-    .popup::before {
-      content: '';
-      position: absolute;
-      left: -8px;
-      top: 50%;
-      transform: translateY(-50%);
-      border-style: solid;
-      border-width: 8px 8px 8px 0;
-      border-color: transparent #fff transparent transparent;
-    }
+  <div class="interactive-container">
+    <div class="progress-section">
+      <div id="progress-dots" class="progress-dots"></div>
+      <div class="progress-text">Click on each ingredient to learn more</div>
+    </div>
 
-    /* preserve pointer cursor on hotspots */
-    .hotspot {
-      cursor: pointer;
-      transform-origin: center;
-      transform-box: fill-box;
-      transition: opacity 0.3s ease;
-    }
+    <div class="coffee-section">
+      <h3 id="coffee-name" class="coffee-title"></h3>
 
-    /* pulse animation */
-    @keyframes pulse {
-      0%   { transform: scale(1); }
-      40%  { transform: scale(0.98); }
-      100% { transform: scale(1.02); }
-    }
-    .pulse-animation {
-      animation: pulse 1.5s infinite ease-in-out alternate;
-      opacity: 0.7;
-    }
+      <div id="coffee-container">
+        <div id="coffee-data">Loading...</div>
+        <div id="popup" class="popup"></div>
 
-    .light-gray-text {
-      color: #545454; 
-    }
-  </style>
-
-  <h3 class="instruction-text">
-    Click on each component in the <span id="drink-name">coffee</span> to learn more about it
-  </h3>
-
-  <h4 id="coffee-name" class="coffee-name"></h4>
-
-  <div id="coffee-container">
-    <div id="coffee-data">Loading...</div>
-    <div id="popup" class="popup"></div>
-
-    <div class="button-container">
-      <button class="nav-button" id="back-btn" disabled>Back</button>
-      <button id="continue-btn" class="nav-button" disabled>Continue</button>
+        <div class="button-container">
+          <button id="back-btn" class="nav-button" disabled>Back</button>
+          <button id="continue-btn" class="nav-button" disabled>Continue</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -273,277 +38,296 @@
     <div class="completion-buttons">
       <a href="{{ url_for('main.quiz', question_id=1) }}" class="completion-button btn-quiz">Take the Quiz</a>
       <a href="{{ url_for('main.learn_overview') }}" class="completion-button btn-components">Return to Components</a>
-      <button class="completion-button btn-more-drinks" id="restart-drinks">Keep Learning Drinks</button>
+      <button id="restart-drinks" class="completion-button btn-more-drinks">Keep Learning Drinks</button>
     </div>
   </div>
-
-  <!-- external JS -->
-  <script src="{{ url_for('static', filename='js/interactive_coffee.js') }}"></script>
 </div>
 
 <style>
 .interactive-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .progress-section {
-    text-align: center;
-    margin-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .progress-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .progress-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #E6D5C3;
-    border: 2px solid #8B6147;
-    transition: all 0.3s ease;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #E6D5C3;
+  border: 2px solid #8B6147;
+  transition: all 0.3s ease;
 }
 
 .progress-dot.completed {
-    background-color: #8B6147;
-    border-color: #8B6147;
+  background-color: #8B6147;
+  border-color: #8B6147;
 }
 
 .progress-text {
-    color: #E6D5C3;
-    font-size: 1.1rem;
-    font-weight: 500;
+  color: #E6D5C3;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 .coffee-section {
-    text-align: center;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .coffee-title {
-    color: #E6D5C3;
-    font-size: 2rem;
-    font-family: 'Playfair Display', serif;
+  color: #E6D5C3;
+  font-size: 2rem;
+  font-family: 'Playfair Display', serif;
 }
 
 #coffee-container {
-    position: relative;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 #coffee-data {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 4rem;
-}
-
-.image-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 4rem;
 }
 
 img, svg {
-    object-fit: contain;
+  object-fit: contain;
+  max-width: 456px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .popup {
-    position: fixed;
-    background: #E6D5C3;
-    border: 2px solid #8B6147;
-    padding: 1rem;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(139, 97, 71, 0.2);
-    display: none;
-    z-index: 1000;
-    max-width: 300px;
-    font-size: 1.3rem;
-    line-height: 1.6;
-    color: #8B6147;
-    transform: translateY(10px);
-    opacity: 0;
-    transition: all 0.3s ease;
+  position: fixed;
+  background: #E6D5C3;
+  border: 2px solid #8B6147;
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(139, 97, 71, 0.2);
+  display: none;
+  z-index: 1000;
+  max-width: 300px;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: #8B6147;
+  transform: translateY(10px);
+  opacity: 0;
+  transition: all 0.3s ease;
 }
 
 .popup.show {
-    transform: translateY(0);
-    opacity: 1;
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .popup-content {
-    font-family: 'Playfair Display', serif;
-    font-weight: 500;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
 }
 
 .popup.left-arrow::before {
-    content: '';
-    position: absolute;
-    left: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    border-style: solid;
-    border-width: 10px 10px 10px 0;
-    border-color: transparent #8B6147 transparent transparent;
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-style: solid;
+  border-width: 10px 10px 10px 0;
+  border-color: transparent #8B6147 transparent transparent;
 }
 
 .popup.left-arrow::after {
-    content: '';
-    position: absolute;
-    left: -8px;
-    top: 50%;
-    transform: translateY(-50%);
-    border-style: solid;
-    border-width: 8px 8px 8px 0;
-    border-color: transparent #E6D5C3 transparent transparent;
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-style: solid;
+  border-width: 8px 8px 8px 0;
+  border-color: transparent #E6D5C3 transparent transparent;
 }
 
 .popup.right-arrow::before {
-    content: '';
-    position: absolute;
-    right: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    border-style: solid;
-    border-width: 10px 0 10px 10px;
-    border-color: transparent transparent transparent #8B6147;
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-style: solid;
+  border-width: 10px 0 10px 10px;
+  border-color: transparent transparent transparent #8B6147;
 }
 
 .popup.right-arrow::after {
-    content: '';
-    position: absolute;
-    right: -8px;
-    top: 50%;
-    transform: translateY(-50%);
-    border-style: solid;
-    border-width: 8px 0 8px 8px;
-    border-color: transparent transparent transparent #E6D5C3;
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-style: solid;
+  border-width: 8px 0 8px 8px;
+  border-color: transparent transparent transparent #E6D5C3;
 }
 
 .hotspot {
-    cursor: pointer;
-    transform-origin: center;
-    transform-box: fill-box;
-    transition: opacity 0.3s ease;
+  cursor: pointer;
+  transform-origin: center;
+  transform-box: fill-box;
+  transition: opacity 0.3s ease;
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    40% { transform: scale(0.98); }
-    100% { transform: scale(1.02); }
+  0% { transform: scale(1); }
+  40% { transform: scale(0.98); }
+  100% { transform: scale(1.02); }
 }
 
 .pulse-animation {
-    animation: pulse 1.5s infinite ease-in-out alternate;
-    opacity: 0.7;
+  animation: pulse 1.5s infinite ease-in-out alternate;
+  opacity: 0.7;
 }
 
-.action-buttons {
-    margin-top: 2rem;
+.button-container {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-button {
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+#back-btn {
+  background-color: transparent;
+  color: #E6D5C3;
+  border: 2px solid #E6D5C3;
+}
+
+#back-btn.enabled:hover {
+  background-color: #E6D5C3;
+  color: var(--main-color);
 }
 
 #continue-btn {
-    background-color: #8B6147;
-    color: #E6D5C3;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 25px;
-    font-size: 1.1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 0.5;
+  background-color: #8B6147;
+  color: #E6D5C3;
+  border: none;
+  opacity: 0.5;
 }
 
-#continue-btn:disabled {
-    cursor: not-allowed;
+#continue-btn.enabled {
+  opacity: 1;
 }
 
-#continue-btn:not(:disabled) {
-    opacity: 1;
+#continue-btn.enabled:hover {
+  background-color: #E6D5C3;
+  color: #8B6147;
+  transform: translateY(-2px);
 }
 
-#continue-btn:not(:disabled):hover {
-    background-color: #E6D5C3;
-    color: #8B6147;
-    transform: translateY(-2px);
+.completion-screen {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #E6D5C3;
+  padding: 3rem;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
-.completion-message {
-    text-align: center;
-    color: #E6D5C3;
-    margin-top: 2rem;
-}
-
-.completion-message h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.completion-message p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+.completion-screen h2 {
+  color: var(--main-color);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .completion-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
 }
 
-.btn-restart, .btn-quiz {
-    background-color: #E6D5C3;
-    color: #8B6147;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 25px;
-    font-size: 1.1rem;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
+.completion-button {
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
-.btn-restart:hover, .btn-quiz:hover {
-    background-color: #8B6147;
-    color: #E6D5C3;
-    transform: translateY(-2px);
+.btn-quiz {
+  background-color: var(--main-color);
+  color: #E6D5C3;
+}
+
+.btn-components {
+  background-color: transparent;
+  color: var(--main-color);
+  border: 2px solid var(--main-color);
+}
+
+.btn-more-drinks {
+  background-color: #E6D5C3;
+  color: var(--main-color);
+  border: 2px solid var(--main-color);
 }
 
 @media (max-width: 768px) {
-    .interactive-container {
-        padding: 1rem;
-    }
-
-    #coffee-container {
-        width: 100%;
-    }
-
-    img, svg {
-        width: 100%;
-    }
-
-    .completion-buttons {
-        flex-direction: column;
-    }
+  .interactive-container {
+    padding: 1rem;
+  }
+  #coffee-container {
+    width: 100%;
+  }
+  img, svg {
+    width: 100%;
+  }
+  .completion-buttons {
+    flex-direction: column;
+  }
 }
 </style>
 
