@@ -10,15 +10,150 @@
         </div>
     </nav>
 
-    <div class="main-content">
+    <div class="hero-section">
         <div class="text-content">
-            <h1>Uncover the nuances of every brew and find the coffee that suits you best.</h1>
-            <p>Explore now and order with confidence.</p>
-            <a href="{{ url_for('main.learn_overview') }}" class="start-button">START LEARNING</a>
+            <h1>Master the Art of Coffee Brewing</h1>
+            <p class="hero-subtitle">From bean selection to perfect brewing, discover the secrets of exceptional coffee through our interactive lessons.</p>
+            <div class="key-points">
+                <p>✓ Learn brewing techniques</p>
+                <p>✓ Understand coffee origins</p>
+                <p>✓ Master flavor profiles</p>
+            </div>
+            <a href="{{ url_for('main.learn_overview') }}" class="start-button">START YOUR JOURNEY</a>
         </div>
         <div class="image-container">
             <img src="{{ url_for('static', filename='images/coffee-composition.jpg') }}" alt="Coffee composition with beans and cups" class="feature-image">
+            <div class="image-overlay"></div>
+        </div>
+    </div>
+
+    <div class="history-section">
+        <h2>The Journey of Coffee</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>9th Century</h3>
+                    <p>The discovery of coffee in Ethiopia, where legend tells of a goat herder named Kaldi who noticed his goats becoming energetic after eating coffee berries. Monks later used the berries to stay awake during prayers. This serendipitous discovery in the highlands of Ethiopia would eventually spark a global phenomenon, with the region still producing some of the world's most prized coffee varieties today.</p>
+                </div>
+                <div class="timeline-image">
+                    <img src="{{ url_for('static', filename='images/ethiopia.jpg') }}" alt="Ethiopian coffee ceremony">
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-image">
+                    <img src="{{ url_for('static', filename='images/yemen.jpg') }}" alt="Yemen coffee cultivation">
+                </div>
+                <div class="timeline-content">
+                    <h3>15th Century</h3>
+                    <p>Coffee spread to the Arabian Peninsula, where it was first cultivated and brewed as a drink in Sufi monasteries. Yemen became the first region to grow coffee commercially, particularly in Mocha, which gave its name to the famous coffee variety. The port city of Mocha became a crucial trading hub, establishing the first coffee trade routes and setting the foundation for the global coffee market.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>16th Century</h3>
+                    <p>Coffee spread through Persia, Egypt, and the Ottoman Empire. Coffeehouses, known as qahveh khaneh, became popular centers for conversation, music, and intellectual exchange. These establishments were so influential that they were often called "Schools of the Wise." The Ottoman Empire's sophisticated coffee culture introduced new brewing methods and social customs that would influence coffee traditions worldwide.</p>
+                </div>
+                <div class="timeline-image">
+                    <img src="{{ url_for('static', filename='images/ottoman.jpg') }}" alt="Ottoman coffee house">
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-image">
+                    <img src="{{ url_for('static', filename='images/europe.jpg') }}" alt="European coffee house">
+                </div>
+                <div class="timeline-content">
+                    <h3>17th Century</h3>
+                    <p>Coffee arrived in Europe via Venice and quickly gained popularity. By the mid-1600s, coffeehouses appeared in major cities like London, Paris, and Vienna, often called "penny universities" for the stimulating conversation they offered. These establishments became hotbeds of intellectual discourse, where philosophers, artists, and merchants gathered to exchange ideas, leading to the birth of many revolutionary concepts and business innovations.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>18th Century</h3>
+                    <p>European colonial powers began cultivating coffee in tropical colonies: The Dutch in Java (Indonesia), The French in the Caribbean, and The Portuguese in Brazil. This period saw the development of large-scale coffee plantations and the establishment of global trade networks. The introduction of coffee to new regions led to the development of unique varieties and processing methods, each contributing to the rich diversity of coffee flavors we enjoy today.</p>
+                </div>
+                <div class="timeline-image">
+                    <img src="{{ url_for('static', filename='images/colonial.jpg') }}" alt="Colonial coffee plantation">
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-image">
+                    <img src="{{ url_for('static', filename='images/brazil.jpg') }}" alt="Brazilian coffee plantation">
+                </div>
+                <div class="timeline-content">
+                    <h3>19th Century</h3>
+                    <p>Brazil emerged as the dominant coffee producer, revolutionizing the industry with its vast plantations and innovative farming techniques. Technological advances like the vacuum coffee pot and later, espresso machines, transformed brewing methods. This era also saw the rise of coffee as a mass-market commodity, with the development of standardized roasting and packaging methods that made coffee more accessible to the general public.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>20th Century</h3>
+                    <p>Instant coffee gained popularity during World Wars, providing soldiers with a quick energy boost. By the late 1900s, the specialty coffee movement began, emphasizing bean origin, roasting, and brewing methods. This period saw the rise of coffee chains and the development of new brewing technologies, while also sparking a renewed interest in traditional brewing methods and the art of coffee preparation.</p>
+                </div>
+                <div class="timeline-image">
+                    <img src="{{ url_for('static', filename='images/specialty.jpg') }}" alt="Specialty coffee brewing">
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-image">
+                    <img src="{{ url_for('static', filename='images/modern.jpg') }}" alt="Modern coffee shop">
+                </div>
+                <div class="timeline-content">
+                    <h3>21st Century</h3>
+                    <p>A focus on sustainability, direct trade, and artisanal methods defines the current coffee culture, with small roasters and baristas elevating coffee to a craft. The third wave coffee movement emphasizes transparency in sourcing, ethical farming practices, and precise brewing techniques. Modern coffee shops have become community hubs, combining traditional brewing methods with cutting-edge technology to create the perfect cup.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modern-stats">
+        <h3>Modern Era – Coffee's Economic Power</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-value">$495B+</span>
+                <span class="stat-label">Global Industry Value</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">2.25B</span>
+                <span class="stat-label">Daily Cups Consumed</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">125M+</span>
+                <span class="stat-label">People Employed</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">33%</span>
+                <span class="stat-label">Brazil's Market Share</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="preview-section">
+        <div class="preview-box">
+            <p>"This course transformed my morning coffee routine. Now I can brew cafe-quality coffee at home!"</p>
+            <span class="preview-author">- Sarah M., Coffee Enthusiast</span>
         </div>
     </div>
 </div>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Know Your Coffee</h4>
+            <p>Master the art of coffee brewing through interactive lessons and quizzes.</p>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="{{ url_for('main.learn_overview') }}">Lessons</a>
+            <a href="{{ url_for('main.quiz', question_id=1) }}">Quiz</a>
+        </div>
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>Have questions? Reach out to us!</p>
+            <p>Email: contact@knowyourcoffee.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Know Your Coffee. All rights reserved.</p>
+    </div>
+</footer>
 {% endblock %}

@@ -219,12 +219,14 @@ def get_progress():
     progress = []
     
     for i in range(1, len(questions) + 1):
-        if i in session.get('skipped_questions', []):
+        # Check if the question has been answered in the current session
+        if i in session.get('answered_questions', []):
+            if session.get(f'q{i}_correct') is True:
+                status = 'correct'
+            else:
+                status = 'incorrect'
+        elif i in session.get('skipped_questions', []):
             status = 'skipped'
-        elif session.get(f'q{i}_correct') is True:
-            status = 'correct'
-        elif session.get(f'q{i}_correct') is False:
-            status = 'incorrect'
         else:
             status = 'unanswered'
         progress.append({'status': status})
