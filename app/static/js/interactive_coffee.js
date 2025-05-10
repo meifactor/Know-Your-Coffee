@@ -46,11 +46,17 @@ $(document).ready(function () {
 
   // helper for popup
   function showPopup(el, info) {
-    const offset = $(el).offset();
+    const rect = el.getBoundingClientRect();
+    const coffeeContainer = $('#coffee-container');
+    const containerOffset = coffeeContainer.offset();
+    const containerWidth = coffeeContainer.width();
     
-    // Calculate position
-    let left = offset.left + $(el).outerWidth() + 10;
-    let top = offset.top;
+    // Calculate position relative to the clicked element
+    let left = rect.left + rect.width + 10; // 10px padding from the element
+    
+    // Get the center point of the clicked element
+    const elementCenter = rect.top + (rect.height / 2);
+    let top = elementCenter - 50; // Center popup vertically (50 is half of popup height)
     
     // Ensure popup stays within viewport
     const popupWidth = 300;
@@ -58,15 +64,22 @@ $(document).ready(function () {
     const windowWidth = $(window).width();
     const windowHeight = $(window).height();
     
-    if (left + popupWidth > windowWidth) {
-      left = offset.left - popupWidth - 10;
+    // If popup would overlap with coffee image or go off screen, show on the left
+    if (left + popupWidth > windowWidth || left < containerOffset.left + containerWidth) {
+      left = rect.left - popupWidth - 10;
       $popup.removeClass('left-arrow').addClass('right-arrow');
     } else {
       $popup.removeClass('right-arrow').addClass('left-arrow');
     }
     
+    // Adjust vertical position if needed
     if (top + popupHeight > windowHeight) {
       top = windowHeight - popupHeight - 20;
+    }
+    
+    // Ensure popup doesn't go above the viewport
+    if (top < 0) {
+      top = 20;
     }
     
     $popup
@@ -93,8 +106,8 @@ $(document).ready(function () {
     // Reset Continue button
     $continue.prop("disabled", true);
 
-    $coffeeData.html(`<div class="image-container"></div>`);
-    const $container = $coffeeData.find(".image-container");
+    // Clear existing content but keep the container structure
+    $coffeeData.empty();
 
     // Load SVG
     fetch(coffee.image)
@@ -105,10 +118,8 @@ $(document).ready(function () {
         const svg = doc.documentElement;
         
         svg.classList.add('img-fluid');
-        svg.setAttribute('width', '500');
-        svg.setAttribute('height', '500');
         
-        $container.html(svg);
+        $coffeeData.html(svg);
 
         let clickedCount = 0;
         const total = hotspots.length;

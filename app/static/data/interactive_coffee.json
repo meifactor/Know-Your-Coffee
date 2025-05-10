@@ -8,13 +8,13 @@
         "id": "espresso",
         "label": "Espresso",
         "fillColor": "url(#gradient-0)",
-        "info": "Classic espresso base."
+        "info": "A strong shot of coffee that gives the drink its rich flavor."
       },
       {
         "id": "hot_water",
         "label": "Hot Water",
         "fillColor": "url(#gradient-1)",
-        "info": "Hot water."
+        "info": "Hot water that makes the drink smoother and less intense."
       }
     ]
   },  
@@ -27,19 +27,19 @@
         "id": "espresso",
         "label": "Espresso",
         "fillColor": "url(#gradient-0)",
-        "info": "Strong espresso base for the latte."
+        "info": "A shot of strong coffee that adds the coffee flavor."
       },
       {
         "id": "steamed_milk",
         "label": "Steamed Milk",
         "fillColor": "url(#gradient-1)",
-        "info": "Smooth, creamy steamed milk."
+        "info": "Warm milk that makes the drink creamy and smooth."
       },
       {
         "id": "foam",
         "label": "Foam",
         "fillColor": "url(#gradient-2)",
-        "info": "Thin layer of foam on top."
+        "info": "A light layer of milk foam on top for a nice finish."
       }
     ]
   },  
@@ -52,19 +52,19 @@
         "id": "espresso",
         "label": "Espresso",
         "fillColor": "url(#gradient-0)",
-        "info": "Bold espresso foundation."
+        "info": "A shot of strong coffee that gives the drink its coffee taste."
       },
       {
         "id": "steamed_milk",
         "label": "Steamed Milk",
         "fillColor": "url(#gradient-1)",
-        "info": "Smooth, creamy steamed milk."
+        "info": "Warm milk that makes the drink smooth and creamy."
       },
       {
         "id": "foam",
         "label": "Thick Foam",
         "fillColor": "#FEF0D5",
-        "info": "Thick layer of foam on top."
+        "info": "A thick layer of milk foam that makes the drink light and airy."
       }
     ]
   },  
@@ -77,13 +77,13 @@
         "id": "espresso",
         "label": "Espresso",
         "fillColor": "url(#gradient-0)",
-        "info": "Rich espresso shot."
+        "info": "A strong shot of coffee that's the main part of the drink."
       },
       {
         "id": "foam",
         "label": "Foam",
         "fillColor": "#FEF0D5",
-        "info": "Just a spoonful of foam."
+        "info": "A small spoonful of milk foam that adds a touch of sweetness."
       }
     ]
   },  
@@ -96,25 +96,25 @@
         "id": "espresso",
         "label": "Espresso",
         "fillColor": "url(#gradient-0)",
-        "info": "Rich espresso shot."
+        "info": "A shot of strong coffee that mixes with the chocolate."
       },
       {
         "id": "chocolate",
         "label": "Chocolate",
         "fillColor": "#AD6E38",
-        "info": "Rich chocolate flavor."
+        "info": "Chocolate syrup that makes the drink sweet and rich."
       },
       {
         "id": "whipped_cream",
         "label": "Whipped Cream",
         "fillColor": "#FBE9CD",
-        "info": "Topped with whipped cream."
+        "info": "Whipped cream on top for extra sweetness and a nice finish."
       },
       {
         "id": "steamed_milk",
         "label": "Steamed Milk",
         "fillColor": "#FED8B2",
-        "info": "Milk."
+        "info": "Warm milk that helps blend the coffee and chocolate together."
       }
     ]
   },
@@ -127,13 +127,13 @@
         "id": "espresso",
         "label": "Espresso",
         "fillColor": "url(#gradient-0)",
-        "info": "Two shots of espresso."
+        "info": "Two shots of strong coffee that make up half the drink."
       },
       {
         "id": "steamed_milk",
         "label": "Steamed Milk",
         "fillColor": "#FED8B2",
-        "info": "Equal parts steamed milk."
+        "info": "Warm milk that balances out the strong coffee taste."
       }
     ]
   },  
@@ -146,13 +146,13 @@
         "id": "espresso",
         "label": "Espresso",
         "fillColor": "url(#gradient-0)",
-        "info": "Two shots of espresso."
+        "info": "Two shots of strong coffee that give the drink its bold taste."
       },
       {
         "id": "steamed_milk",
         "label": "Steamed Milk",
         "fillColor": "#FED8B2",
-        "info": "Some steamed milk."
+        "info": "Warm milk that makes the drink smooth while keeping the coffee taste strong."
       }
     ]
   },  
@@ -165,7 +165,7 @@
         "id": "espresso",
         "label": "Espresso",
         "fillColor": "url(#gradient-0)",
-        "info": "Two shots of espresso."
+        "info": "Two shots of strong coffee for an extra bold taste."
       }
     ]
   }  

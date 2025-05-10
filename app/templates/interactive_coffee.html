@@ -30,7 +30,7 @@
         </div>
 
         <div id="completion-message" class="completion-message" style="display: none;">
-            <h2>Great job! 🎉</h2>
+            <h2>Great job!</h2>
             <p>You've learned about all the coffee components.</p>
             <div class="completion-buttons">
                 <button id="restart-btn" class="btn-restart">Restart Lesson</button>
@@ -44,8 +44,7 @@
 .interactive-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
-    min-height: calc(100vh - 100px);
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -86,41 +85,59 @@
 .coffee-section {
     text-align: center;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .coffee-title {
     color: #E6D5C3;
     font-size: 2rem;
-    margin-bottom: 2rem;
     font-family: 'Playfair Display', serif;
 }
 
 #coffee-container {
     position: relative;
-    width: 500px;
-    margin: 0 auto;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#coffee-data {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 4rem;
+}
+
+.image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 img, svg {
-    width: 500px;
-    height: 500px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .popup {
     position: fixed;
-    background: #fff;
-    border: none;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    background: #E6D5C3;
+    border: 2px solid #8B6147;
+    padding: 1rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(139, 97, 71, 0.2);
     display: none;
     z-index: 1000;
     max-width: 300px;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #333;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #8B6147;
     transform: translateY(10px);
     opacity: 0;
     transition: all 0.3s ease;
@@ -131,7 +148,23 @@ img, svg {
     opacity: 1;
 }
 
-.popup::before {
+.popup-content {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+}
+
+.popup.left-arrow::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #8B6147 transparent transparent;
+}
+
+.popup.left-arrow::after {
     content: '';
     position: absolute;
     left: -8px;
@@ -139,7 +172,29 @@ img, svg {
     transform: translateY(-50%);
     border-style: solid;
     border-width: 8px 8px 8px 0;
-    border-color: transparent #fff transparent transparent;
+    border-color: transparent #E6D5C3 transparent transparent;
+}
+
+.popup.right-arrow::before {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent #8B6147;
+}
+
+.popup.right-arrow::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-width: 8px 0 8px 8px;
+    border-color: transparent transparent transparent #E6D5C3;
 }
 
 .hotspot {
@@ -243,7 +298,6 @@ img, svg {
 
     img, svg {
         width: 100%;
-        height: auto;
     }
 
     .completion-buttons {
