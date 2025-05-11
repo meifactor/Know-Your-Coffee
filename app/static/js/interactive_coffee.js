@@ -2,6 +2,7 @@ $(document).ready(function() {
   // state
   let coffeeData = [];
   let currentIndex = 0;
+  let hasCompletedAllDrinks = false;
 
   // cache the container that actually has our buttons
   const $coffeeContainer = $("#coffee-container").last();
@@ -11,9 +12,11 @@ $(document).ready(function() {
   const $continueBtn     = $coffeeContainer.find("#continue-btn");
   const $progressDots    = $("#progress-dots");
   const $completionScreen= $("#completion-screen");
-  const $restartDrinks   = $("#restart-drinks");
+  const $beverageSelect  = $("#beverage-select");
+  const $beverageSelector = $("#beverage-selector");
   const $coffeeTitle     = $(".coffee-title#coffee-name");
   const $drinkName       = $("#drink-name");
+  const $restartDrinks   = $("#restart-drinks");
 
   // build the little circles up top
   function initializeProgressDots() {
@@ -39,20 +42,20 @@ $(document).ready(function() {
     const rect = el.getBoundingClientRect();
     const { left: cx, top: cy } = $coffeeContainer.offset();
     const cw = $coffeeContainer.width();
-
+    
     let left = rect.left + rect.width + 10;
     let top  = rect.top + rect.height/2 - 50;
-
+    
     const popupW = 300, popupH = 100;
     const ww = $(window).width(), wh = $(window).height();
-
+    
     if (left + popupW > ww || left < cx + cw) {
       left = rect.left - popupW - 10;
       $popup.removeClass("left-arrow").addClass("right-arrow");
     } else {
       $popup.removeClass("right-arrow").addClass("left-arrow");
     }
-
+    
     if (top + popupH > wh) top = wh - popupH - 20;
     if (top < 0) top = 20;
 
@@ -73,6 +76,11 @@ $(document).ready(function() {
     hidePopup();
     $(".coffee-section").fadeOut(300);
     $completionScreen.fadeIn(300);
+    // Show the beverage selector after completing all drinks
+    if (!hasCompletedAllDrinks) {
+      hasCompletedAllDrinks = true;
+      $beverageSelector.fadeIn(300);
+    }
   }
 
   function hideCompletionScreen() {
@@ -89,6 +97,11 @@ $(document).ready(function() {
     $drinkName.text(coffee.name.toLowerCase());
     $continueBtn.prop("disabled", true).removeClass("enabled");
     updateNavButtons();
+
+    // Update dropdown selection only if it's visible
+    if (hasCompletedAllDrinks) {
+      $beverageSelect.val(index);
+    }
 
     $coffeeData.empty();
     fetch(coffee.image)
@@ -148,6 +161,7 @@ $(document).ready(function() {
     e.stopPropagation();
     if (this.disabled || !coffeeData.length) return;
     hidePopup();
+    
     if (currentIndex === coffeeData.length - 1) {
       showCompletionScreen();
     } else {
@@ -161,6 +175,15 @@ $(document).ready(function() {
     if (currentIndex > 0) {
       hidePopup();
       renderCoffee(currentIndex - 1);
+    }
+  });
+
+  // Handle beverage selection from dropdown
+  $beverageSelect.on("change", function() {
+    const selectedIndex = parseInt($(this).val());
+    if (!isNaN(selectedIndex) && selectedIndex >= 0 && selectedIndex < coffeeData.length) {
+      hidePopup();
+      renderCoffee(selectedIndex);
     }
   });
 
@@ -184,6 +207,11 @@ $(document).ready(function() {
     .done(data => {
       coffeeData = data;
       if (coffeeData.length) {
+        // Populate dropdown options
+        coffeeData.forEach((coffee, index) => {
+          $beverageSelect.append(`<option value="${index}">${coffee.name}</option>`);
+        });
+        
         initializeProgressDots();
         renderCoffee(0);
       }
